@@ -26,14 +26,13 @@ public class EquipmentService {
 	
 	public String equipmentList(String typeName,String subjectName,String deptid,Integer pageNum,Integer pageSize) throws Exception{
 		Page page=new Page(pageNum, pageSize);
-		Map<String,Object> condition=new HashMap<String,Object>(); 
-		condition.put("startNum", page.getStartRow());
-		condition.put("endNum", page.getEndRow());
+		Map<String,Object> condition=null;
+
 		if(StringUtils.isNotBlank(deptid)){
+			condition=new HashMap<String,Object>(); 
 			condition.put("DEPARTMENTID", deptid);
 		}
-		CommonSearchBean commonSearchBean=new CommonSearchBean("em_equipment","LASTUPDATE DESC","NAME ename,MODEL emodel,id eid",condition);
-		List<Object> childs=new ArrayList<Object>();
+
 		Map<String,Object> condition_assettype=null;
 		if(StringUtils.isNotBlank(typeName)){
 			condition_assettype=new HashMap<String,Object>();
@@ -47,9 +46,12 @@ public class EquipmentService {
 			condition_subject.put("NAME,like", subjectName.replaceAll("%", "")+"%");
 		}
 		
-		childs.add(new CommonChildBean("em_assettype", "code", "ASSETTYPECODE", condition_assettype));
-		childs.add(new CommonChildBean("em_subject", "code", "SUBJECTCODE", condition_subject));
-		childs.add(new CommonChildBean("em_equipmentphoto", "EQUIPMENTID", "ID", null));
+
+		CommonSearchBean commonSearchBean=new CommonSearchBean("em_equipment","LASTUPDATE DESC","t1.NAME ename,t1.MODEL emodel,t1.id eid",page.getStartRow(),page.getEndRow(),condition,
+				new CommonChildBean("em_assettype", "code", "ASSETTYPECODE", condition_assettype),
+				new CommonChildBean("em_subject", "code", "SUBJECTCODE", condition_subject),
+				new CommonChildBean("em_equipmentphoto", "EQUIPMENTID", "ID", null));
+
 		CommonCountBean ccb = new CommonCountBean();
 
 		PropertyUtils.copyProperties(ccb, commonSearchBean);

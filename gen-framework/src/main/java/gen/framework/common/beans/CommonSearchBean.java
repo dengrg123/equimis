@@ -6,6 +6,28 @@ package gen.framework.common.beans;
  *
  */
 public class CommonSearchBean extends CommonBean {
+	/**
+	 * 开始行号
+	 */
+	private Integer startNum;
+	/**
+	 * 结速行号
+	 */
+	private Integer endNum;
+	
+	
+	public Integer getStartNum() {
+		return startNum;
+	}
+	public void setStartNum(Integer startNum) {
+		this.startNum = startNum;
+	}
+	public Integer getEndNum() {
+		return endNum;
+	}
+	public void setEndNum(Integer endNum) {
+		this.endNum = endNum;
+	}
 	public CommonSearchBean() {
 		// TODO Auto-generated constructor stub
 		super();
@@ -18,9 +40,10 @@ public class CommonSearchBean extends CommonBean {
 	 * @param condition 主表查询条件
 	 * @param childConditions 从表查询条件
 	 */
-	public CommonSearchBean(String tablename ,String ordername, String custom, Object condition,
+	public CommonSearchBean(String tablename ,String ordername, String custom,Integer startNum,Integer endNum, Object condition,
 			CommonChildBean ... childConditions) {
 		super(tablename, ordername, custom, condition, childConditions);
-
+		this.endNum=endNum;
+		this.startNum=startNum;
 	}
 }

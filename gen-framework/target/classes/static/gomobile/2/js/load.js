@@ -6,6 +6,7 @@ $(document).ready(function () {
     x=3;
     $('.posts li:lt('+x+')').show();
     $('#loadMore').click(function () {
+    	
         x= (x+1 <= size_li) ? x+1 : size_li;
         $('.posts li:lt('+x+')').show();
         if(x == size_li){

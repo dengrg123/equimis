@@ -97,10 +97,16 @@ public class UserService {
 		Map<String,Object> condition=new HashMap<String,Object>();
 		condition.put("account", account);
 		condition.put("password", password);
-		CommonSearchBean csb=new CommonSearchBean("em_user", null, "userid", condition);
+		CommonSearchBean csb=new CommonSearchBean("em_user", null, "userid", null,null,condition);
 		List userIdList=this.commonMapper.selectObjects(csb);
-		result.put("retCode", "1");
-		result.put("retMsg", "修改成功");
+		if(userIdList!=null && !userIdList.isEmpty()){
+			result.put("retCode", "1");
+			result.put("retMsg", "登录成功");
+		}else{
+			result.put("retCode", "-15");
+			result.put("retMsg", "登录失败");
+		}
+
 		return result.toJSONString();
 	}
 }

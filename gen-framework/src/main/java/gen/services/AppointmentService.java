@@ -110,14 +110,13 @@ public class AppointmentService {
 	public String list(String userid,Integer pageNum,Integer pageSize)throws Exception{
 		JSONObject result=new  JSONObject();
 		Page page=new Page(pageNum, pageSize);
-		Map<String,Object> condition=new HashMap<String,Object>();
-		condition.put("startNum", page.getStartRow());
-		condition.put("endNum", page.getEndRow());
+		Map<String,Object> condition=null;;
+
 		if(StringUtils.isNotBlank(userid)){
-			
+			 condition=new HashMap<String,Object>();
 			condition.put("userid", userid);
 		}
-		CommonSearchBean csb=new CommonSearchBean("em_appointment",null,null,condition);
+		CommonSearchBean csb=new CommonSearchBean("em_appointment",null,null, page.getStartRow(),page.getEndRow(),condition);
 		CommonCountBean ccb = new CommonCountBean();
 
 		PropertyUtils.copyProperties(ccb, csb);

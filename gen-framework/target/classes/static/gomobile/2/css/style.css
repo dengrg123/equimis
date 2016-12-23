@@ -12,7 +12,7 @@ body{font-family:Arial, Helvetica, sans-serif;padding:0;font-size:12px;margin:0 
 a, span.tag{ text-decoration:none;}
 a.view_details{padding:0 0 0 15px;}
 .swiper-container{ width:800px;height: 100%;}
-#header{ position:absolute; top:-100px; left:0px; z-index:9999; width:94%; height:40px;padding:6px 3%;}
+#header{ position:absolute; top:0px; left:0px; z-index:9999; width:94%; height:40px;padding:6px 3%;}
 
 /* Headings
 /*------------------------------------------*/
@@ -50,7 +50,9 @@ h2.page_title{ font-size:30px;padding:0 0 20px 0;}
 .scrolltop a{ color:#FFFFFF; text-decoration:none; font-weight:bold; font-size:12px; display:block; text-align:center;}
 .scrolltop a img{display:inline-block;max-height:28px; margin:5px 0 0 0;}
 /*----------page buttons---------------*/
+a.button_13{  margin:0 1% 5px 0;padding:5px 5px; float:left; display:block;font-size:13px; text-decoration:none; text-align:center;}
 a.button_12{ width:48%; margin:0 1% 10px 1%;padding:10px 0; float:left; display:block;font-size:18px; text-decoration:none; text-align:center;}
+a.button_14{ width:98%;padding:10px 0; float:left; display:block;font-size:18px; text-decoration:none; text-align:center;}
 a.button_11{ width:98%; margin:0 0 10px 1%;padding:10px 0; float:left; display:block;font-size:18px; text-decoration:none; text-align:center;}
 .green{ background-color:#85af5d;}
 .blue{ background-color:#29aae3;}
@@ -63,6 +65,7 @@ a.button_11{ width:98%; margin:0 0 10px 1%;padding:10px 0; float:left; display:b
 .gray{ background-color:#6e6e6e;}
 .yellow{ background-color:#ffb606;}
 .bluegreen{ background-color:#06a78b;}
+.othercolor{ background-color:#f4f4f4;}
 
 .green_borderbottom{border-bottom:3px #759a51 solid;}
 .blue_borderbottom{border-bottom:3px #198bbd solid;}
@@ -87,7 +90,8 @@ span.quote_author{ font-style:normal; font-weight:bold; text-decoration:underlin
 ul.listing{ list-style:none; padding:0 0 10px 0;}
 ul.listing li { padding:5px 0 5px 10px; margin:0 0 10px 10px; border-left:2px #ececec solid;}
 ul.listing_detailed{ list-style:none; padding:0 0 10px 0;}
-ul.listing_detailed li { padding:5px 0 5px 40px; margin:0 0 10px 0;}
+ul.listing_detailed li { padding:5px 0 5px 30px; margin:0 0 10px 0;}
+ul.listing_detailed li input{border: none;height: 25px;width:87%;}
 ul.listing_detailed li a{}
 
 /* Toggle

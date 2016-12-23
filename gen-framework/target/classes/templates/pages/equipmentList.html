@@ -1,0 +1,171 @@
+<!DOCTYPE html >
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<link rel="apple-touch-icon" href="/gomobile/2/images/apple-touch-icon.png" />
+<link rel="apple-touch-startup-image" href="/gomobile/2/images/apple-touch-startup-image-320x460.png" />
+<meta name="author" content="FamousThemes" />
+<meta name="description" content="GoMobile - A next generation web app theme" />
+<meta name="keywords" content="mobile web app, mobile template, mobile design, mobile app design, mobile app theme, mobile wordpress theme, my mobile app" />
+<title>仿GoMobile触屏版html5响应式手机app网站模板下载经典-pppf.taobao.com整理搜集仅用于学习</title>
+<link type="text/css" rel="stylesheet" href="/gomobile/2/css/style.css"/>
+<link type="text/css" rel="stylesheet" href="/gomobile/2/colors/medical/medical.css"/>
+<link type="text/css" rel="stylesheet" href="/gomobile/2/css/idangerous.swiper.css"/>
+<link type="text/css" rel="stylesheet" href="/gomobile/2/css/swipebox.css"/>
+
+</head>
+<body>
+  <div id="header">
+      <div class="gohome"><a href="#"><img src="/gomobile/2/images/icons/home.png" alt="" title="" /></a></div>
+      <div class="gomenu"><a href="#" onclick="swiperParent.swipeTo(5);"><img src="/gomobile/2/images/icons/about.png" alt="" title="" /></a></div>
+  </div>
+
+      <div class="swiper-container swiper-parent">
+    <div class="swiper-wrapper">
+
+      <div class="swiper-slide sliderbg ">
+      <div class="swiper-container swiper-nested4">
+               <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                              <div class="slide-inner">
+                                        <div class="pages_container">
+                                        <h2 class="page_title">设备列表</h2>
+                                        <div class="toogle_wrap">
+                                            <div class="trigger"><a href="#">条件筛选</a></div>
+                                            <div class="toggle_container">
+                                            <ul class="listing_detailed">
+                                            <li><span>学科：</span><span><input name="subjectName" /></span></li>
+                                            <li><span>类型：</span><span><input name="typeName"/></span></li>
+                                            </ul>
+                                            <a  href="#" th:each="model:${deptListTop10}" th:inline="text" onclick='changeBg(this)' class="button_13 green green_borderbottom">
+                                            [[${model['name']}]]
+                                            <input type="hidden" name="deptid"  th:value="${model['ID']}"/>
+                                            </a>
+											<a  href="javascript:void(0)" onclick="moreDept(this)" th:if="${deptList!=null and !deptList.isEmpty()}" style="float:left;margin-top:10px;">更多...</a>
+											 <a href="#" class="button_14 bluegreen bluegreen_borderbottom">搜　索</a>
+                                            </div>
+                                        </div>
+                                        <div class="portfolio_item">
+                                             <div class="portfolio_image"><a rel="gallery-1" href="images/portfolio_thumb.jpg" class="swipebox" title="Webdesign work"><img src="/gomobile/2/images/portfolio_thumb.jpg" alt="" title="" border="0" /></a></div>
+                                                 <div class="portfolio_details">
+                                                 <h4>Webdesign work</h4>
+                                                 <p>Nullam et scelerisque erat. Cras vestibulum justo...</p>
+                                                 <a rel="gallery-2" href="images/portfolio_thumb.jpg" class="swipebox view_details" title="Webdesign work">view details</a>
+                                                 </div>
+                                        </div>
+                                        <div class="portfolio_item">
+                                             <div class="portfolio_image"><a rel="gallery-1" href="images/portfolio_thumb2.jpg" class="swipebox" title="Webdesign work"><img src="/gomobile/2/images/portfolio_thumb2.jpg" alt="" title="" border="0" /></a></div>
+                                                 <div class="portfolio_details">
+                                                 <h4>Mobile development</h4>
+                                                 <p>Cras vestibulum justo eget lorem semper ac facilisis...</p>
+                                                 <a rel="gallery-2" href="images/portfolio_thumb2.jpg" class="swipebox view_details" title="Webdesign work">view details</a>
+                                                 </div>
+                                        </div>
+                                        <div class="portfolio_item">
+                                             <div class="portfolio_image"><a rel="gallery-1" href="images/portfolio_thumb3.jpg" class="swipebox" title="Webdesign work"><img src="/gomobile/2/images/portfolio_thumb3.jpg" alt="" title="" border="0" /></a></div>
+                                                 <div class="portfolio_details">
+                                                 <h4>Applications</h4>
+                                                 <p>Sed ut felis non arcu pulvinar molestie....</p>
+                                                 <a rel="gallery-2" href="images/portfolio_thumb3.jpg" class="swipebox view_details" title="Webdesign work">view details</a>
+                                                 </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        
+                                        <h3>Portfolio with round images</h3>
+                                        <div class="portfolio_item">
+                                             <div class="portfolio_image_round"><a rel="gallery-1" href="images/portfolio_thumb.jpg" class="swipebox" title="Webdesign work"><img src="/gomobile/2/images/portfolio_thumb.jpg" alt="" title="" border="0" /></a></div>
+                                                 <div class="portfolio_details">
+                                                 <h4>Webdesign work</h4>
+                                                 <p>Nullam et scelerisque erat. Cras vestibulum justo...</p>
+                                                 <a rel="gallery-2" href="images/portfolio_thumb.jpg" class="swipebox view_details" title="Webdesign work">view details</a>
+                                                 </div>
+                                        </div>
+                                         <div class="portfolio_item">
+                                             <div class="portfolio_image_round"><a rel="gallery-1" href="images/portfolio_thumb2.jpg" class="swipebox" title="Webdesign work"><img src="/gomobile/2/images/portfolio_thumb2.jpg" alt="" title="" border="0" /></a></div>
+                                                 <div class="portfolio_details">
+                                                 <h4>Mobile development</h4>
+                                                 <p>Cras vestibulum justo eget lorem semper ac facilisis...</p>
+                                                 <a rel="gallery-2" href="images/portfolio_thumb2.jpg" class="swipebox view_details" title="Webdesign work">view details</a>
+                                                 </div>
+                                        </div>
+                                        <div class="portfolio_item">
+                                             <div class="portfolio_image_round"><a rel="gallery-1" href="images/portfolio_thumb3.jpg" class="swipebox" title="Webdesign work"><img src="/gomobile/2/images/portfolio_thumb3.jpg" alt="" title="" border="0" /></a></div>
+                                                 <div class="portfolio_details">
+                                                 <h4>Applications</h4>
+                                                 <p>Sed ut felis non arcu pulvinar molestie....</p>
+                                                 <a rel="gallery-2" href="images/portfolio_thumb3.jpg" class="swipebox view_details" title="Webdesign work">view details</a>
+                                                 </div>
+                                        </div>
+                                           
+                                        <div class="clearfix"></div>
+      									<div class="scrolltop"><a href="#" class="scrolltop4"><img src="/gomobile/2/images/icons/top.png" alt="Go on top" title="Go on top" /></a></div>
+                                        </div>
+                                        <!--End of page container-->
+                              </div>
+                    </div>
+              </div>
+              <div class="swiper-scrollbar4"></div>
+     </div>
+     </div>
+     
+      <!--Page 5 content-->
+      
+      <!--Page 6 content-->
+     
+  <div class="pagination"></div>
+  </div></div>
+<script type="text/javascript" src="/gomobile/2/js/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="/gomobile/2/js/jquery.swipebox.js"></script>
+<script type="text/javascript" src="/gomobile/2/js/idangerous.swiper-2.1.min.js"></script>
+<script type="text/javascript" src="/gomobile/2/js/idangerous.swiper.scrollbar-2.1.js"></script>
+<script type="text/javascript" src="/gomobile/2/js/jquery.tabify.js"></script>
+<script type="text/javascript" src="/gomobile/2/js/jquery.fitvids.js"></script>
+<script type="text/javascript" src="/gomobile/2/js/code.js"></script>
+<script type="text/javascript" src="/gomobile/2/js/load.js"></script>
+<script type="text/javascript"  th:inline="javascript">
+	/* <![CDATA[*/
+	var otherDept= /*[[${deptList}]]*/
+	function moreDept(obj){
+		var deptsObj=eval("("+otherDept+")");
+		
+		for(var i=0;i<deptsObj.length;i++)
+		{
+			$(obj).before("<a  href='#'  class='button_13 green green_borderbottom' onclick='changeBg(this)'>"+deptsObj[i].name+"<input type='hidden' name='deptid'' value='"+deptsObj[i].ID+"'/></a>");
+		}
+		$(obj).remove();
+	}
+	function changeBg(obj){
+		var hasGreen=$(obj).hasClass("green");
+		var blueobjs=$("a.blue");
+		if(blueobjs.length>0){
+			blueobjs.removeClass("blue");
+			blueobjs.removeClass("blue_borderbottom");
+			blueobjs.addClass("green");
+			blueobjs.addClass("green_borderbottom");
+		}
+		
+		if(hasGreen){
+			$(obj).removeClass("green");
+			$(obj).removeClass("green_borderbottom");
+			$(obj).addClass("blue");
+			$(obj).addClass("blue_borderbottom");
+		}
+	}
+	$(function(){
+		getData();
+		
+	})
+	function getData(){
+		$.post("/equipment/list",null,function(data){
+			alert(data);
+		})
+	}
+	/* ]]>*/
+</script>
+</body>
+</html>
