@@ -25,7 +25,12 @@ public  class Page<E> {
     public List<E> getResult() {  
         return result;  
     }  
-
+	public int getNextPageNo() {
+		if (pageNum >= pages) {
+			return pages==0?1:pages;
+		}
+		return pageNum + 1;
+	}
     public void setResult(List<E> result) {  
         this.result = result;  
     }  

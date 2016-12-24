@@ -1,6 +1,5 @@
 package gen.services;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +22,18 @@ public class EquipmentService {
 	
 	@Autowired
 	private CommonMapper commonMapper;
+	
+	public String equipmentInfo(String id){
+		Map<String,Object> condition=new HashMap<String,Object>();
+		condition.put("ID", id);//em_department
+		CommonSearchBean csb=new CommonSearchBean("em_equipment",null,"t1.*,ct0.name sname",null,null,condition,
+				new CommonChildBean("em_subject", "code", "SUBJECTCODE", null));
+		List lists=this.commonMapper.selectObjects(csb);
+		if(lists!=null && !lists.isEmpty()){
+			return JSONObject.toJSONString(lists.get(0));
+		}
+		return null;
+	}
 	
 	public String equipmentList(String typeName,String subjectName,String deptid,Integer pageNum,Integer pageSize) throws Exception{
 		Page page=new Page(pageNum, pageSize);
@@ -47,7 +58,7 @@ public class EquipmentService {
 		}
 		
 
-		CommonSearchBean commonSearchBean=new CommonSearchBean("em_equipment","LASTUPDATE DESC","t1.NAME ename,t1.MODEL emodel,t1.id eid",page.getStartRow(),page.getEndRow(),condition,
+		CommonSearchBean commonSearchBean=new CommonSearchBean("em_equipment","LASTUPDATE DESC","t1.NAME ename,t1.MODEL emodel,t1.CODE ecode,t1.id eid,t1.DESCRIPTION ,PATH,CONTENTTYPE",page.getStartRow(),page.getEndRow(),condition,
 				new CommonChildBean("em_assettype", "code", "ASSETTYPECODE", condition_assettype),
 				new CommonChildBean("em_subject", "code", "SUBJECTCODE", condition_subject),
 				new CommonChildBean("em_equipmentphoto", "EQUIPMENTID", "ID", null));

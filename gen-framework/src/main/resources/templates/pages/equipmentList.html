@@ -17,7 +17,27 @@
 <link type="text/css" rel="stylesheet" href="/gomobile/2/colors/medical/medical.css"/>
 <link type="text/css" rel="stylesheet" href="/gomobile/2/css/idangerous.swiper.css"/>
 <link type="text/css" rel="stylesheet" href="/gomobile/2/css/swipebox.css"/>
-
+<style type="text/css">
+	*{font-family:微软雅黑;}
+	.textp{
+	border-bottom: 1px #ddd dashed;
+	 text-indent:2em; 
+	width: 100%;
+ 	margin:0px;padding:0px;
+    padding: 0 0 5px 0;
+    margin: 0 0 5px 0;}
+    .titlep{
+    	font-weight:bold;
+    	margin:0px;padding:0px;
+    }
+    .portfolio_image{text-align: center}
+    .portfolio_image img{margin-bottom: 7px;}
+    .style_a{
+    	margin-right:20px;
+    }
+   .style_a2{font-size: 15px;}
+  
+</style>
 </head>
 <body>
   <div id="header">
@@ -37,74 +57,26 @@
                                         <h2 class="page_title">设备列表</h2>
                                         <div class="toogle_wrap">
                                             <div class="trigger"><a href="#">条件筛选</a></div>
-                                            <div class="toggle_container">
+                                            <div class="toggle_container" style="display:none">
+                                            <form action="">
                                             <ul class="listing_detailed">
-                                            <li><span>学科：</span><span><input name="subjectName" /></span></li>
-                                            <li><span>类型：</span><span><input name="typeName"/></span></li>
+                                            <li><span>学科：</span><span><input id="subjectName" /></span></li>
+                                            <li><span>类型：</span><span><input id="typeName"/></span></li>
                                             </ul>
                                             <a  href="#" th:each="model:${deptListTop10}" th:inline="text" onclick='changeBg(this)' class="button_13 green green_borderbottom">
                                             [[${model['name']}]]
                                             <input type="hidden" name="deptid"  th:value="${model['ID']}"/>
                                             </a>
 											<a  href="javascript:void(0)" onclick="moreDept(this)" th:if="${deptList!=null and !deptList.isEmpty()}" style="float:left;margin-top:10px;">更多...</a>
-											 <a href="#" class="button_14 bluegreen bluegreen_borderbottom">搜　索</a>
+											 <a href="#" onclick="getData(this.parentNode)" class="button_14 bluegreen bluegreen_borderbottom">搜　索</a>
+                                            </form>
                                             </div>
                                         </div>
-                                        <div class="portfolio_item">
-                                             <div class="portfolio_image"><a rel="gallery-1" href="images/portfolio_thumb.jpg" class="swipebox" title="Webdesign work"><img src="/gomobile/2/images/portfolio_thumb.jpg" alt="" title="" border="0" /></a></div>
-                                                 <div class="portfolio_details">
-                                                 <h4>Webdesign work</h4>
-                                                 <p>Nullam et scelerisque erat. Cras vestibulum justo...</p>
-                                                 <a rel="gallery-2" href="images/portfolio_thumb.jpg" class="swipebox view_details" title="Webdesign work">view details</a>
-                                                 </div>
-                                        </div>
-                                        <div class="portfolio_item">
-                                             <div class="portfolio_image"><a rel="gallery-1" href="images/portfolio_thumb2.jpg" class="swipebox" title="Webdesign work"><img src="/gomobile/2/images/portfolio_thumb2.jpg" alt="" title="" border="0" /></a></div>
-                                                 <div class="portfolio_details">
-                                                 <h4>Mobile development</h4>
-                                                 <p>Cras vestibulum justo eget lorem semper ac facilisis...</p>
-                                                 <a rel="gallery-2" href="images/portfolio_thumb2.jpg" class="swipebox view_details" title="Webdesign work">view details</a>
-                                                 </div>
-                                        </div>
-                                        <div class="portfolio_item">
-                                             <div class="portfolio_image"><a rel="gallery-1" href="images/portfolio_thumb3.jpg" class="swipebox" title="Webdesign work"><img src="/gomobile/2/images/portfolio_thumb3.jpg" alt="" title="" border="0" /></a></div>
-                                                 <div class="portfolio_details">
-                                                 <h4>Applications</h4>
-                                                 <p>Sed ut felis non arcu pulvinar molestie....</p>
-                                                 <a rel="gallery-2" href="images/portfolio_thumb3.jpg" class="swipebox view_details" title="Webdesign work">view details</a>
-                                                 </div>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                        
-                                        <h3>Portfolio with round images</h3>
-                                        <div class="portfolio_item">
-                                             <div class="portfolio_image_round"><a rel="gallery-1" href="images/portfolio_thumb.jpg" class="swipebox" title="Webdesign work"><img src="/gomobile/2/images/portfolio_thumb.jpg" alt="" title="" border="0" /></a></div>
-                                                 <div class="portfolio_details">
-                                                 <h4>Webdesign work</h4>
-                                                 <p>Nullam et scelerisque erat. Cras vestibulum justo...</p>
-                                                 <a rel="gallery-2" href="images/portfolio_thumb.jpg" class="swipebox view_details" title="Webdesign work">view details</a>
-                                                 </div>
-                                        </div>
-                                         <div class="portfolio_item">
-                                             <div class="portfolio_image_round"><a rel="gallery-1" href="images/portfolio_thumb2.jpg" class="swipebox" title="Webdesign work"><img src="/gomobile/2/images/portfolio_thumb2.jpg" alt="" title="" border="0" /></a></div>
-                                                 <div class="portfolio_details">
-                                                 <h4>Mobile development</h4>
-                                                 <p>Cras vestibulum justo eget lorem semper ac facilisis...</p>
-                                                 <a rel="gallery-2" href="images/portfolio_thumb2.jpg" class="swipebox view_details" title="Webdesign work">view details</a>
-                                                 </div>
-                                        </div>
-                                        <div class="portfolio_item">
-                                             <div class="portfolio_image_round"><a rel="gallery-1" href="images/portfolio_thumb3.jpg" class="swipebox" title="Webdesign work"><img src="/gomobile/2/images/portfolio_thumb3.jpg" alt="" title="" border="0" /></a></div>
-                                                 <div class="portfolio_details">
-                                                 <h4>Applications</h4>
-                                                 <p>Sed ut felis non arcu pulvinar molestie....</p>
-                                                 <a rel="gallery-2" href="images/portfolio_thumb3.jpg" class="swipebox view_details" title="Webdesign work">view details</a>
-                                                 </div>
-                                        </div>
-                                           
+											
                                         <div class="clearfix"></div>
       									<div class="scrolltop"><a href="#" class="scrolltop4"><img src="/gomobile/2/images/icons/top.png" alt="Go on top" title="Go on top" /></a></div>
                                         </div>
+                                        
                                         <!--End of page container-->
                               </div>
                     </div>
@@ -113,12 +85,13 @@
      </div>
      </div>
      
-      <!--Page 5 content-->
-      
+ 
       <!--Page 6 content-->
      
   <div class="pagination"></div>
-  </div></div>
+  </div>
+  
+  </div>
 <script type="text/javascript" src="/gomobile/2/js/jquery-1.10.1.min.js"></script>
 <script type="text/javascript" src="/gomobile/2/js/jquery.swipebox.js"></script>
 <script type="text/javascript" src="/gomobile/2/js/idangerous.swiper-2.1.min.js"></script>
@@ -138,6 +111,7 @@
 			$(obj).before("<a  href='#'  class='button_13 green green_borderbottom' onclick='changeBg(this)'>"+deptsObj[i].name+"<input type='hidden' name='deptid'' value='"+deptsObj[i].ID+"'/></a>");
 		}
 		$(obj).remove();
+		swiperNested4.reInit();
 	}
 	function changeBg(obj){
 		var hasGreen=$(obj).hasClass("green");
@@ -160,10 +134,103 @@
 		getData();
 		
 	})
-	function getData(){
-		$.post("/equipment/list",null,function(data){
-			alert(data);
-		})
+
+	var pageNum;
+	var pageSize;
+	function getData(formid){
+		var params=null;
+		if(formid!=undefined){
+			$(".portfolio_item").remove();
+			params={
+				subjectName:$("#subjectName").val(), 
+				typeName:$("#typeName").val(),
+				deptid:$("a.blue").length>=0?$("a.blue input").eq(0).val():null
+			}
+		}
+		$.post("/equipment/list",params,function(data){
+			pageNum=data.nextPageNo;
+			
+			for(var i=0;i<data.result.length;i++){
+				var itemhtml='<div class="portfolio_item">';
+				itemhtml+='<div class="portfolio_image"><a rel="gallery-1" href="http://202.116.161.6:8180/equimis/inlineStream.action?path=';
+				
+				itemhtml+=data.result[i].PATH+'&contentType='+data.result[i].CONTENTTYPE;
+				itemhtml+='" class="swipebox" title="Webdesign work"><img src="http://202.116.161.6:8180/equimis/inlineStream.action?path=';
+				itemhtml+=data.result[i].PATH+'&contentType='+data.result[i].CONTENTTYPE;
+				itemhtml+='" alt="" title="" border="0" /></a><a href="#" class="style_a style_a2" onclick="createhtmlstr(this)">预约</a><a href="#" class="style_a2" >预约情况</a></div>';
+				itemhtml+='<div class="portfolio_details comment_row2"><h4>'+data.result[i].ename+'</h4>';
+				itemhtml+='<p class="titlep">编号：</p>';
+				itemhtml+='<p class="textp">'+data.result[i].ecode+'</p>';
+				itemhtml+='<p class="titlep">设备型号：</p>';
+				itemhtml+='<p class="textp">'+data.result[i].emodel+'</p>';
+				itemhtml+='<p class="titlep">仪器介绍：</p>';
+				itemhtml+='<p class="textp">'+data.result[i].DESCRIPTION+'</p>';
+				itemhtml+='</div><a href="#" class="ext" onclick="getDataById(this,\''+data.result[i].eid+'\')" style="float:right">更多...</a></div>';
+				$(".clearfix").before(itemhtml);
+			}
+			
+			swiperNested4.reInit();
+			
+		},"JSON")
+	}
+	function createhtmlstr(obj){
+		
+		var htmlstr='<div>';
+			htmlstr+='<form>';
+			htmlstr+='<p class="textp" >项目名称：<input style="width:80%;height:30px;border:1px solid #f4f4f4;"/></p>';
+			htmlstr+='<p class="textp" >预约类型：<input style="width:80%;height:30px;border:1px solid #f4f4f4;"/></p>'; 
+			htmlstr+='<p class="textp" >开始时间：<input style="width:80%;height:30px;border:1px solid #f4f4f4;"/></p>';  
+			htmlstr+='<p class="textp" >结束时间：<input style="width:80%;height:30px;border:1px solid #f4f4f4;"/></p>';  
+			htmlstr+='<p class="textp" >使用功能：<input style="width:80%;height:30px;border:1px solid #f4f4f4;"/></p>';  
+			htmlstr+='<p class="textp" >样口名称：<input style="width:80%;height:30px;border:1px solid #f4f4f4;"/></p>';
+			htmlstr+='<p class="textp" >　操作人：<input style="width:80%;height:30px;border:1px solid #f4f4f4;"/></p>';  
+			htmlstr+='<p class="textp" >　　评价：<input style="width:80%;height:30px;border:1px solid #f4f4f4;"/></p>';  
+			htmlstr+='<a href="#" class="button_12 green green_borderbottom" >提交</a>';
+			htmlstr+='<a href="#" class="button_12 green green_borderbottom" >重置</a>';
+			htmlstr+='</form>';
+			htmlstr+='</div>';
+			$(obj).parent().parent().find(".ext").slideToggle("fast",function(){
+				
+				alert(1);
+			});
+	}
+	function getDataById(obj,id){
+		var prevobj=$(obj);
+		$.post("/equipment/info",{id,id},function(data){
+			
+			var itemhtml='<div class="ext">';
+			itemhtml+='<p class="titlep">仪器规格：</p>';
+			itemhtml+='<p class="textp">'+data.SPECIFICATION+'</p>';
+			itemhtml+='<p class="titlep">技术参数：</p>';
+			itemhtml+='<p class="textp">'+data.PARAMETERS+'</p>';
+			itemhtml+='<p class="titlep">主要配件：</p>';
+			itemhtml+='<p class="textp">'+data.ACCESSORIES+'</p>';
+			itemhtml+='<p class="titlep">主要功能及用途：</p>';
+			itemhtml+='<p class="textp">'+data.MAINFUNCTION+'</p>';
+			itemhtml+='<p class="titlep">使用实例：</p>';
+			itemhtml+='<p class="textp">'+data.USEEXAMPLES+'</p>';
+
+			itemhtml+='<p class="titlep">收费标准：</p>';
+			itemhtml+='<p class="textp">'+data.FEES+'</p>';
+			itemhtml+='<p class="titlep">所属学院：</p>';
+			itemhtml+='<p class="textp">'+data.CREATOR+'</p>';
+			itemhtml+='<p class="titlep">仪器价格：</p>';
+			itemhtml+='<p class="textp">'+data.PRICE+'</p>';
+			itemhtml+='<p class="titlep">生产厂商：</p>';
+			itemhtml+='<p class="textp">'+data.VENDOR+'</p>';
+			itemhtml+='<p class="titlep">存放地点：</p>';
+			itemhtml+='<p class="textp">'+data.LOCATION+'</p>';
+			itemhtml+='<p class="titlep">所属学科：</p>';
+			itemhtml+='<p class="textp">'+data.sname+'</p>';
+			itemhtml+='<p class="titlep">应用邻域：</p>';
+			itemhtml+='<p class="textp">'+data.COUNTRY+'</p>';
+			itemhtml+='<p class="titlep">是否收费：</p>';
+			itemhtml+='<p class="textp">'+(data.ISFORFREE?"是":"否")+'</p>';
+			itemhtml+='<p class="titlep">负责人信息：</p>';
+			itemhtml+='<p class="textp">姓名-'+data.MANAGER+'　电话-'+data.MANAGERPHONE+'　邮箱-'+data.MANAGEREMAIL+'</p></div>';
+			prevobj.before(itemhtml);
+			swiperNested4.reInit();
+		},"JSON");
 	}
 	/* ]]>*/
 </script>

@@ -63,8 +63,10 @@ scrollbar: {
 })
 var swiperNested4 = new Swiper('.swiper-nested4', {
 scrollContainer:true,
+
 mousewheelControl : true,
 mode:'vertical',
+
 //Enable Scrollbar
 scrollbar: {
   container :'.swiper-scrollbar4',
@@ -180,7 +182,10 @@ $(".videocontainer").fitVids();
 $(".toggle_container").hide();
 $(".toggle_container_blog").hide();
 $(".trigger").click(function(){
-	$(this).toggleClass("active").next().slideToggle("slow");
+	$(this).toggleClass("active").next().slideToggle("slow",function(){
+		if(swiperNested4!=undefined)swiperNested4.reInit();
+	});
+	
 	return false;
 });
 $(".trigger_blog").click(function(){

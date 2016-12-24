@@ -3,7 +3,6 @@ package gen.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -34,5 +33,16 @@ public class EquipmentController {
 			return "{\"retCode\":-1,\"retMsg\":\"系统出现异常\"}";
 		}
 
+	}
+	@RequestMapping(value="/info")
+	@ResponseBody
+	public String info(String id){
+		try {
+			return this.equipmentService.equipmentInfo(id);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return "{\"retCode\":-1,\"retMsg\":\"系统出现异常\"}";
+		}
 	}
 }

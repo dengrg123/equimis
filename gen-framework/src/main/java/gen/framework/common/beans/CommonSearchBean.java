@@ -37,6 +37,8 @@ public class CommonSearchBean extends CommonBean {
 	 * @param tablename 表名 (必须)
 	 * @param ordername 排序字段
 	 * @param custom 自定义返回字段
+	 * @param startNum 行开始
+	 * @param endNum 行结束
 	 * @param condition 主表查询条件
 	 * @param childConditions 从表查询条件
 	 */
