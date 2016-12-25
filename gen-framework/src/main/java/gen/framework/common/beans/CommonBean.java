@@ -36,7 +36,16 @@ public abstract class CommonBean {
 	 */
 	private List childConditions;
 	
+	public Boolean isAuto=true;
+	
+	
 
+	public Boolean isAuto() {
+		return isAuto;
+	}
+	public void setAuto(Boolean isAuto) {
+		this.isAuto = isAuto;
+	}
 	public String getTablename() {
 		return tablename;
 	}

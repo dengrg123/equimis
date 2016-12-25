@@ -13,6 +13,6 @@ import gen.framework.common.beans.CommonUpdateBean;
 public interface CommonMapper {
 	long selectCount(CommonCountBean commonCountBean);
 	List selectObjects(CommonSearchBean commonSearchBean);
-	int insertObjects(CommonInsertBean commonInsertBean);
+	int insertObject(CommonInsertBean commonInsertBean);
 	int updateObject(CommonUpdateBean commonUpdateBean);
 }

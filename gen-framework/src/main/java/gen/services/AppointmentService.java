@@ -1,12 +1,15 @@
 package gen.services;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.UUID;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.asm.Label;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -66,11 +69,30 @@ public class AppointmentService {
 			result.put("retMsg", "样品数量不能为空或者小于1");
 			return result.toJSONString();
 		}
+		LinkedHashMap condtion=new LinkedHashMap();
+		condtion.put("(", null);
+		condtion.put("begintime,<=",appointmentBean.getBegintime());
+		condtion.put("and", null);
+		condtion.put("endtime,>=",appointmentBean.getBegintime());
+		condtion.put(") or (", null);
+		condtion.put("begintime,<= ",appointmentBean.getEndtime());
+		condtion.put("and ", null);
+		condtion.put("endtime,>= ",appointmentBean.getEndtime());
+		condtion.put(")", null);
+		CommonCountBean ccb=new CommonCountBean("em_appointment",condtion);
+		ccb.setAuto(false);
+		long num=this.commonMapper.selectCount(ccb);
+		if(num>0){
+			result.put("retCode", "-7");
+			result.put("retMsg", "时间段已经被预约了，请重新选一个");
+			return result.toJSONString();
+		}
+				
 		appointmentBean.setId(UUID.randomUUID().toString().replaceAll("-", ""));
 		appointmentBean.setStatus(0);
 		CommonInsertBean cib=new CommonInsertBean("em_appointment", appointmentBean);
 		
-		this.commonMapper.insertObjects(cib);
+		this.commonMapper.insertObject(cib);
 		result.put("retCode", "1");
 		result.put("retMsg", "添加成功");
 		return result.toJSONString();
@@ -132,6 +154,7 @@ public class AppointmentService {
 		return result.toJSONString();
 	}
 	public static void main(String[] args) {
-		System.out.println();
+		String key="wef";
+		System.out.println( (!key.matches("and.*") && !key.matches("or.*")));
 	}
 }

@@ -19,8 +19,10 @@ public class PageController {
 	@RequestMapping("toEquipmentList")
 	public String toEquipmentList(ModelMap model){
 		ArrayList list=(ArrayList)this.directoryDataService.get("dept");
+		ArrayList projectlist=(ArrayList)this.directoryDataService.get("projecttype");
 		model.addAttribute("deptListTop10", list.subList(0, 10));
 		model.addAttribute("deptList",JSONObject.toJSONString(list.subList(10, list.size())));
+		model.addAttribute("projecttype",projectlist);
 		return "pages/equipmentList";
 	}
 }

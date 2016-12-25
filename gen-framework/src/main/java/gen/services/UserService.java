@@ -48,7 +48,7 @@ public class UserService {
 		user.setPassword("123456");
 		user.setUserid(UUID.randomUUID().toString().replaceAll("-", ""));
 		CommonInsertBean cib=new CommonInsertBean("em_user",user);
-		this.commonMapper.insertObjects(cib);
+		//this.commonMapper.insertObjects(cib);
 		result.put("retCode", "1");
 		result.put("retMsg", "添加成功");
 		return result.toJSONString();

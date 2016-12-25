@@ -15,6 +15,7 @@ public class DirectoryDataService {
 		String tablename=null;
 		switch (type) {
 		case "dept":tablename="em_department";break;
+		case "projecttype":tablename="em_projecttype";break;
 
 		default:
 			break;

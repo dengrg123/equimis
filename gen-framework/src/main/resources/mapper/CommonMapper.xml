@@ -32,10 +32,10 @@
 				<foreach collection="child.condition" item="cvalue" index="ckey" >
 					<choose>
 						<when test="ckey.matches('([a-zA-Z0-9]+)|(\\[[a-zA-Z0-9]+\\])')">
-							 ct${key}.${ckey}=t1.${cvalue}
+						and	 ct${key}.${ckey}=t1.${cvalue}
 						</when>
 						<otherwise>
-							 ${ckey.split(",")[0]} ${ckey.split(",")[1]} #{cvalue} 
+						and	 ${ckey.split(",")[0]} ${ckey.split(",")[1]} #{cvalue} 
 						</otherwise>
 					</choose>
 					
@@ -45,13 +45,29 @@
 		</if>
 		<if test="null!=condition">
 		<where>
-			<foreach collection="condition" item="value"  index="key" separator="and" >   
+			<foreach collection="condition" item="value"  index="key"  >   
 		      	<choose>
-				<when test="key.matches('([a-zA-Z0-9]+)|(\\[[a-zA-Z0-9]+\\])')">
-					 t1.${key} = #{value} 
+		      	
+				<when test="key.matches('([a-zA-Z0-9]+)|(\\[[a-zA-Z0-9]+\\])') and !key.matches('and.*') and !key.matches('or.*')">
+					<if test="auto">
+					and 
+					</if>
+					t1.${key} = #{value} 
 				</when>
 				<otherwise>
-					 t1.${key.split(",")[0]} ${key.split(",")[1]} #{value} 
+				<choose>
+					<when test="key.matches('[(]') or key.matches('[)]') or key.matches('[)] or [(]') or key.matches('or.*') or key.matches('and.*')">
+						${key}
+					</when>
+					<otherwise>
+					<if test="auto">
+					and 
+					</if>
+					t1.${key.split(",")[0]} ${key.split(",")[1]} #{value} 
+					</otherwise>
+				</choose>
+				
+					
 				</otherwise>
 			</choose>
 			</foreach>
@@ -108,14 +124,29 @@
 		</if>
 		<if test="null!=condition">
 		<where>
-			<foreach collection="condition" item="value"  index="key"  separator="and" >   
+			<foreach collection="condition" item="value"  index="key"   >   
 		      	<choose>
 		      	
-				<when test="key.matches('([a-zA-Z0-9]+)|(\\[[a-zA-Z0-9]+\\])')" >
-					 t1.${key} = #{value} 
+				<when test="key.matches('([a-zA-Z0-9]+)|(\\[[a-zA-Z0-9]+\\])') and !key.matches('and.*') and !key.matches('or.*')">
+					<if test="auto">
+					and 
+					</if>
+					t1.${key} = #{value} 
 				</when>
 				<otherwise>
-					 t1.${key.split(",")[0]} ${key.split(",")[1]} #{value} 
+				<choose>
+					<when test="key.matches('[(]') or key.matches('[)]') or key.matches('[)] or [(]') or key.matches('or.*') or key.matches('and.*')">
+						${key}
+					</when>
+					<otherwise>
+					<if test="auto">
+					and 
+					</if>
+					t1.${key.split(",")[0]} ${key.split(",")[1]} #{value} 
+					</otherwise>
+				</choose>
+				
+					
 				</otherwise>
 			</choose>
 			</foreach>

@@ -2,14 +2,18 @@ package gen.beans;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class AppointmentBean {
 	 
 	   public String id;
 	   
 	   public Integer status;
 	   
+	   @DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
 	   public Date begintime;
 	   
+	   @DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
 	   public Date endtime;
 	   
 	   public Date actualbegin;
