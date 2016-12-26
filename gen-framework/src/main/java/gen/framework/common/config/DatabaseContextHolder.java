@@ -1,4 +1,4 @@
-package gen.framework.common.datasources;
+package gen.framework.common.config;
 
 
 public class DatabaseContextHolder {

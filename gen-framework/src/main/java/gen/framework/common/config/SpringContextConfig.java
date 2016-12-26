@@ -1,4 +1,4 @@
-package gen.framework.common.datasources;
+package gen.framework.common.config;
 
 import java.util.HashMap;
 import java.util.Map;

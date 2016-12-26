@@ -5,7 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import gen.framework.common.datasources.DatabaseType;
+import gen.framework.common.config.DatabaseType;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)

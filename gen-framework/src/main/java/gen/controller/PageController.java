@@ -20,9 +20,16 @@ public class PageController {
 	public String toEquipmentList(ModelMap model){
 		ArrayList list=(ArrayList)this.directoryDataService.get("dept");
 		ArrayList projectlist=(ArrayList)this.directoryDataService.get("projecttype");
+		ArrayList useTypeCodelist=(ArrayList)this.directoryDataService.get("useTypeCode");
 		model.addAttribute("deptListTop10", list.subList(0, 10));
 		model.addAttribute("deptList",JSONObject.toJSONString(list.subList(10, list.size())));
 		model.addAttribute("projecttype",projectlist);
+		model.addAttribute("useTypeCode",useTypeCodelist);
 		return "pages/equipmentList";
+	}
+	@RequestMapping("toLogin")
+	public String toLogin(ModelMap model){
+		
+		return "pages/login";
 	}
 }

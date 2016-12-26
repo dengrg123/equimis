@@ -9,7 +9,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 
-import gen.framework.common.datasources.DatabaseContextHolder;
+import gen.framework.common.config.DatabaseContextHolder;
 
 /**
  * 

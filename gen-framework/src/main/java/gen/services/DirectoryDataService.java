@@ -16,6 +16,7 @@ public class DirectoryDataService {
 		switch (type) {
 		case "dept":tablename="em_department";break;
 		case "projecttype":tablename="em_projecttype";break;
+		case "useTypeCode":tablename="em_usetype";break;
 
 		default:
 			break;

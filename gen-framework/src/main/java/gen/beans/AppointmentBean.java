@@ -56,17 +56,17 @@ public class AppointmentBean {
 	   
 	   public String deliverer;
 	   
-	   public String delPhone;
+	   public String del_Phone;
 	   
-	   public String delMobile;
+	   public String del_Mobile;
 	   
-	   public String delFax;
+	   public String del_Fax;
 	   
-	   public String delEmail;
+	   public String del_Email;
 	   
 	   public String department;
 	   
-	   public String depAddress;
+	   public String dep_Address;
 	   
 	   public Date arrivetime;
 	   
@@ -74,7 +74,7 @@ public class AppointmentBean {
 	   
 	   public String requirements;
 	   
-	   public String comRemark;
+	   public String com_remark;
 	   
 	   public String originnumber;
 	   
@@ -119,6 +119,8 @@ public class AppointmentBean {
 	   public String sampledesc;
 	   
 	   public String sampleid;
+
+	   public String handler;
 
 	public String getId() {
 		return id;
@@ -312,36 +314,36 @@ public class AppointmentBean {
 		this.deliverer = deliverer;
 	}
 
-	public String getDelPhone() {
-		return delPhone;
+	public String getDel_Phone() {
+		return del_Phone;
 	}
 
-	public void setDelPhone(String delPhone) {
-		this.delPhone = delPhone;
+	public void setDel_Phone(String del_Phone) {
+		this.del_Phone = del_Phone;
 	}
 
-	public String getDelMobile() {
-		return delMobile;
+	public String getDel_Mobile() {
+		return del_Mobile;
 	}
 
-	public void setDelMobile(String delMobile) {
-		this.delMobile = delMobile;
+	public void setDel_Mobile(String del_Mobile) {
+		this.del_Mobile = del_Mobile;
 	}
 
-	public String getDelFax() {
-		return delFax;
+	public String getDel_Fax() {
+		return del_Fax;
 	}
 
-	public void setDelFax(String delFax) {
-		this.delFax = delFax;
+	public void setDel_Fax(String del_Fax) {
+		this.del_Fax = del_Fax;
 	}
 
-	public String getDelEmail() {
-		return delEmail;
+	public String getDel_Email() {
+		return del_Email;
 	}
 
-	public void setDelEmail(String delEmail) {
-		this.delEmail = delEmail;
+	public void setDel_Email(String del_Email) {
+		this.del_Email = del_Email;
 	}
 
 	public String getDepartment() {
@@ -352,12 +354,12 @@ public class AppointmentBean {
 		this.department = department;
 	}
 
-	public String getDepAddress() {
-		return depAddress;
+	public String getDep_Address() {
+		return dep_Address;
 	}
 
-	public void setDepAddress(String depAddress) {
-		this.depAddress = depAddress;
+	public void setDep_Address(String dep_Address) {
+		this.dep_Address = dep_Address;
 	}
 
 	public Date getArrivetime() {
@@ -384,12 +386,12 @@ public class AppointmentBean {
 		this.requirements = requirements;
 	}
 
-	public String getComRemark() {
-		return comRemark;
+	public String getCom_remark() {
+		return com_remark;
 	}
 
-	public void setComRemark(String comRemark) {
-		this.comRemark = comRemark;
+	public void setCom_remark(String com_remark) {
+		this.com_remark = com_remark;
 	}
 
 	public String getOriginnumber() {
@@ -568,5 +570,13 @@ public class AppointmentBean {
 		this.sampleid = sampleid;
 	}
 
+	public String getHandler() {
+		return handler;
+	}
+
+	public void setHandler(String handler) {
+		this.handler = handler;
+	}
+	
 	   
 }

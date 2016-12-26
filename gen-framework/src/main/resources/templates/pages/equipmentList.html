@@ -19,6 +19,9 @@
 <link type="text/css" rel="stylesheet" href="/gomobile/2/css/swipebox.css"/>
 <link href="/gomobile/2/js/mobiscroll/dev/css/mobiscroll.core-2.6.2.css" rel="stylesheet" type="text/css" />
 <link href="/gomobile/2/js/mobiscroll/dev/css/mobiscroll.animation-2.6.2.css" rel="stylesheet" type="text/css" />
+<link href="/gomobile/2/js/mobiscroll/dev/css/mobiscroll.animation-2.6.2.css" rel="stylesheet" type="text/css" />
+<link href="/login/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="/login/css/login.css" rel="stylesheet" type="text/css" />
 
 <style type="text/css">
 	*{font-family:微软雅黑;}
@@ -43,8 +46,21 @@
 </style>
 </head>
 <body>
-											<p class="textp" >开始时间：<input name="begintime" id="begintime" style="width:80%;height:30px;border:1px solid #f4f4f4;"/></p> 
-											<p class="textp" >结束时间：<input name="endtime" id="endtime" style="width:80%;height:30px;border:1px solid #f4f4f4;"/></p> 
+<div class="loginwrapper" id="loginwrapper">
+	<form class="login">
+		<p class="title">Log in</p>
+		<input type="text" placeholder="Username" autofocus="autofocus"/>
+		<i class="fa fa-user"></i>
+		<input type="password" placeholder="Password" />
+		<i class="fa fa-key"></i>
+	
+		<button>
+			<i class="spinner"></i>
+			<span class="state">登　入</span>
+		</button>
+	</form>
+
+</div>
 
   <div id="header">
       <div class="gohome"><a href="#"><img src="/gomobile/2/images/icons/home.png" alt="" title="" /></a></div>
@@ -83,18 +99,32 @@
                                         	<form>
                                         	<input type="hidden" id="equipmentid" name="equipmentid" />
 											<p class="textp" >项目名称：<input type="text" name="projectname" style="width:80%;height:30px;border:1px solid #f4f4f4;"/></p>
-											
-											<p class="textp" >预约类型：
+											<p class="textp" >项目类型：
 											<select name="projecttypecode"  style="width:80%;height:30px;border:1px solid #f4f4f4;">
 												<option th:each="model:${projecttype}" th:value="${model['code']}" th:text="${model['name']}"></option>
 											</select>
 											</p>
+											
+											<p class="textp" >　项目人：<input type="text" name="projectmanager" style="width:80%;height:30px;border:1px solid #f4f4f4;"/></p>
+											
+											<p class="textp" >预约类型：
+											<select name="appointmentType"  style="width:80%;height:30px;border:1px solid #f4f4f4;">
+												<option value="自主上机">自主上机</option>
+												<option value="委托上机">委托上机</option>
+											</select>
+											</p>
 											<p class="textp" >开始时间：<input name="begintime" id="begintime" style="width:80%;height:30px;border:1px solid #f4f4f4;"/></p> 
 											<p class="textp" >结束时间：<input name="endtime" id="endtime" style="width:80%;height:30px;border:1px solid #f4f4f4;"/></p> 
-											<p class="textp" >使用功能：<input style="width:80%;height:30px;border:1px solid #f4f4f4;"/></p>  
+											<p class="textp" >使用功能：
+												<select name="useTypeCode"  style="width:80%;height:30px;border:1px solid #f4f4f4;">
+													<option th:each="model:${useTypeCode}" th:value="${model['code']}" th:text="${model['name']}"></option>
+												</select>
+											</p>  
 											<p class="textp" >样口名称：<input name="samplename" style="width:80%;height:30px;border:1px solid #f4f4f4;"/></p>
 											<p class="textp" >样口数量：<input name="samples" style="width:80%;height:30px;border:1px solid #f4f4f4;"/></p>
-											<p class="textp" >　　评价：<input style="width:80%;height:30px;border:1px solid #f4f4f4;"/></p>
+											<p class="textp" >　操作人：<input type="text" name="handler" style="width:80%;height:30px;border:1px solid #f4f4f4;"/></p>
+											<p class="textp" >　　备注：<textarea name="com_remark"  rows="" cols="" style="width:80%;height:60px;border:1px solid #f4f4f4;"></textarea>
+											</p>
 											<a href="#" class="button_12 green green_borderbottom" onclick="toSubmit()" >提交</a>
 											<a href="#" class="button_12 green green_borderbottom" >重置</a>
 											</form>
@@ -128,9 +158,10 @@
 <script type="text/javascript" src="/gomobile/2/js/load.js"></script>
  <script src="/gomobile/2/js/mobiscroll/dev/js/mobiscroll.core-2.6.2.js" type="text/javascript"></script>
 <script src="/gomobile/2/js/mobiscroll/dev/js/mobiscroll.core-2.6.2-zh.js" type="text/javascript"></script>
-
 <script src="/gomobile/2/js/mobiscroll/dev/js/mobiscroll.datetime-2.6.2.js" type="text/javascript"></script>
+<script src="/login/js/index.js" type="text/javascript"></script>
 <script type="text/javascript"  th:inline="javascript">
+	var isLogin=false;
 	/* <![CDATA[*/
 	var otherDept= /*[[${deptList}]]*/
 	function toSubmit(){
@@ -138,9 +169,11 @@
 		$.post("/appointment/toSubmit",$("#formdiv form").serializeArray(),function(data){
 			if(data.retCode==1){
 				alert(data.retMsg);
-				$("#formdiv").hide();
-				swiperNested4.reInit();
-				swiperNested4.swipeTo(0);
+				$("#formdiv").slideUp("fast",function(){
+					swiperNested4.reInit();
+					swiperNested4.swipeTo(0);
+				});
+
 			}else{
 				alert(data.retMsg);
 			}
@@ -228,6 +261,10 @@
 		},"JSON")
 	}
 	function toAppointment(obj,eid){
+		if(!isLogin){
+			$("#loginwrapper").css("visibility","visible");
+			return ;
+		}
 		 swiperNested4.swipeTo(0);
 		 $("#formdiv").slideToggle("fast",function(){
 			 $("#formdiv #equipmentid").val(eid);
@@ -237,9 +274,12 @@
 	function getDataById(obj){
 		$(obj).text("收起...");
 		obj.onclick=function(){
-			$(this).prev().remove();
-			swiperNested4.reInit();
-			$(this).text("更多...");
+			var nobj=$(this);
+			nobj.prev().slideUp("false",function(){
+				nobj.prev().remove();
+				swiperNested4.reInit();
+			});
+			nobj.text("更多...");
 			this.onclick=function(){
 				getDataById(this);
 			}
@@ -247,7 +287,7 @@
 		var prevobj=$(obj);
 		$.post("/equipment/info",{id:obj.getAttribute("eid")},function(data){
 			
-			var itemhtml='<div class="ext">';
+			var itemhtml='<div class="ext" style="display:none">';
 			itemhtml+='<p class="titlep">仪器规格：</p>';
 			itemhtml+='<p class="textp">'+data.SPECIFICATION+'</p>';
 			itemhtml+='<p class="titlep">技术参数：</p>';
@@ -278,7 +318,10 @@
 			itemhtml+='<p class="titlep">负责人信息：</p>';
 			itemhtml+='<p class="textp">姓名-'+data.MANAGER+'　电话-'+data.MANAGERPHONE+'　邮箱-'+data.MANAGEREMAIL+'</p></div>';
 			prevobj.before(itemhtml);
-			swiperNested4.reInit();
+			$(obj).prev().slideDown("normal",function(){
+				swiperNested4.reInit();
+			});
+			
 		},"JSON");
 	}
 	/* ]]>*/
