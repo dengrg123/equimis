@@ -146,7 +146,7 @@
 	var otherDept= /*[[${deptList}]]*/
 	function toSubmit(){
 		
-		$.post("/appointment/toSubmit",$("#formdiv form").serializeArray(),function(data){
+		$.post("/appointment/ajaxSubmit",$("#formdiv form").serializeArray(),function(data){
 			if(data.retCode==1){
 				alert(data.retMsg);
 				$("#formdiv").slideUp("fast",function(){
@@ -215,7 +215,7 @@
 				deptid:$("a.blue").length>=0?$("a.blue input").eq(0).val():null
 			}
 		}
-		$.post("/equipment/list",params,function(data){
+		$.post("/equipment/ajaxList",params,function(data){
 			pageNum=data.nextPageNo;
 			
 			for(var i=0;i<data.result.length;i++){
@@ -266,7 +266,7 @@
 			}
 		}
 		var prevobj=$(obj);
-		$.post("/equipment/info",{id:obj.getAttribute("eid")},function(data){
+		$.post("/equipment/ajaxInfo",{id:obj.getAttribute("eid")},function(data){
 			
 			var itemhtml='<div class="ext" style="display:none">';
 			itemhtml+='<p class="titlep">仪器规格：</p>';

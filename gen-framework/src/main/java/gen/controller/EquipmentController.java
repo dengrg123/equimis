@@ -19,7 +19,7 @@ public class EquipmentController {
 		// TODO Auto-generated constructor stub
 		System.out.println("---------");
 	}
-	@RequestMapping(value="/list")
+	@RequestMapping(value="/ajaxList")
 	@ResponseBody
 	public String list(String typeName,
 			String subjectName,
@@ -34,7 +34,7 @@ public class EquipmentController {
 		}
 
 	}
-	@RequestMapping(value="/info")
+	@RequestMapping(value="/ajaxInfo")
 	@ResponseBody
 	public String info(String id){
 		try {

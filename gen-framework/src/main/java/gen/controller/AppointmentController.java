@@ -16,9 +16,9 @@ public class AppointmentController {
 	@Autowired
 	private AppointmentService appointmentService;
 	
-	@RequestMapping(value="/toSubmit",method=RequestMethod.POST)
+	@RequestMapping(value="/ajaxSubmit",method=RequestMethod.POST)
 	@ResponseBody
-	public String toSubmit(AppointmentBean appointmentBean){
+	public String ajaxSubmit(AppointmentBean appointmentBean){
 		try {
 			return this.appointmentService.submit(appointmentBean);
 		} catch (Exception e) {

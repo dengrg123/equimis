@@ -21,7 +21,7 @@ public class ManagerController {
 	@Autowired
 	private UserService userService;
 	
-	@RequestMapping("appointmentList")
+	@RequestMapping("toAppointmentList")
 	public String toCommon(
 			String userid,
 			@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
@@ -36,7 +36,7 @@ public class ManagerController {
 	
 		return "pages/manager/commonpage";
 	}
-	@RequestMapping("userList")
+	@RequestMapping("toUserList")
 	public String userList(
 			@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
 			@RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
@@ -49,9 +49,9 @@ public class ManagerController {
 		}
 		return "pages/manager/commonpage";
 	}
-	@RequestMapping("doShenpi")
+	@RequestMapping("ajaxShenpi")
 	@ResponseBody
-	public String doShenpi(String id,String auditmessage,Integer status){
+	public String shenpi(String id,String auditmessage,Integer status){
 		try {
 
 			return this.appointmentService.shenpi( id, auditmessage, status);
@@ -61,7 +61,7 @@ public class ManagerController {
 			return "{\"retCode\":-1,\"retMsg\":\"系统出现异常\"}";
 		}
 	}
-	@RequestMapping("addUser")
+	@RequestMapping("ajaxAddUser")
 	@ResponseBody
 	public String addUser(UserBean user){
 		try {

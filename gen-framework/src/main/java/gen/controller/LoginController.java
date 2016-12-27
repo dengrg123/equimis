@@ -20,7 +20,7 @@ public class LoginController {
 		@Autowired
 		private UserService userService;
 	
-		@RequestMapping("/login")
+		@RequestMapping("/ajaxLogin")
 		@ResponseBody
 		public String login(String account,String password,String jumpurl,HttpSession session){
 			try {
@@ -28,7 +28,7 @@ public class LoginController {
 				String callback=userService.login(account, password,jumpurl,callbackMap);
 				if(callback.indexOf("登录成功")>-1){
 					
-					session.setAttribute("loginInfo", callbackMap);
+					session.setAttribute("loginInfo", callbackMap.get("userInfo"));
 				}
 				return callback;
 			} catch (Exception e) {

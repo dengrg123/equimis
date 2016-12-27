@@ -11,7 +11,7 @@ $('.login').on('submit', function(e) {
   $state.html('验证中...');
   setTimeout(function() {
 	  
-	  $.post("/login",$('.login').serializeArray(),function(data){
+	  $.post("/ajaxLogin",$('.login').serializeArray(),function(data){
 		 
 		  if(data.retCode==1){
 			    $this.addClass('ok');

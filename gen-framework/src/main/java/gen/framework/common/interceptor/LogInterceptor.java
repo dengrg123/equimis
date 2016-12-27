@@ -1,5 +1,6 @@
 package gen.framework.common.interceptor;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.List;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -29,48 +31,113 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
 	
 	@Value("${gen.framework.login.intercept.urls}")
 	private String interUrl;
+	
+	@Value("${gen.framework.manager.urls}")
+	private String managerurls;
+
+	@Value("${gen.framework.login.url}")
+	private String loginUrl;
+	
+	@Value("${gen.framework.web.urls}")
+	private String webUrls;
+	
+	private static final String toRegex=".*/to[^?./]+.*";
+	private static final String doRegex=".*/do[^?./]+.*";
+	private static final String ajaxRegex=".*/ajax[^?./]+.*";
+	
+	private List<String> urlList;
+	private List<String> managerUrlList;
+	private List<String> webUrlsList;
+	
+
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		String path=request.getRequestURI();
+		String referer=request.getHeader("referer");
+		if(StringUtils.isNotBlank(referer))referer=referer.replaceAll("http://[^/]+", "");
+		if(urlList==null)urlList=Arrays.asList(interUrl.replaceAll(" ","").split(","));
+		if(managerUrlList==null)managerUrlList=Arrays.asList(managerurls.replaceAll(" ", "").split(","));
+		if(webUrlsList==null)webUrlsList=Arrays.asList(webUrls.replaceAll(" ", "").split(","));
 		if(path.startsWith("/manager/")){
-			HttpSession session=request.getSession();
-			Map<String,String> loginInfo=(Map<String,String>)session.getAttribute("loginInfo");
-			if(loginInfo==null){
-				request.getRequestDispatcher("/pages/toLogin").forward(request, response);
-				return false;
-			}else if(loginInfo.containsKey("ACCOUNT") && loginInfo.get("ACCOUNT").equals("sysadmin")){
-				return true;
-			}else{
-				request.getRequestDispatcher("/pages/toLogin").forward(request, response);
-				return false;
+			
+			if(managerUrlList.contains(path)){
+				Map<String,String> loginInfo=getLoginInfo(request);
+				if(loginInfo==null){
+					this.setLoginToJumpUrl(path, request, response);
+					
+					return false;
+				}else if(loginInfo.containsKey("account") && loginInfo.get("account").equals("sysadmin")){
+					return true;
+				}else{
+					this.setLoginToJumpUrl(path, request, response);
+					
+					return false;
+				}
 			}
+			return false;
+
 		}
 		if(interUrl!=null){
 			
-			List<String> urlList=Arrays.asList(interUrl.replaceAll(" ","").split(","));
+			
 			if(urlList.contains(path)){
-				HttpSession session=request.getSession();
-				if(session.getAttribute("loginInfo")==null){
-					JSONObject jsonObject=new  JSONObject();
-					jsonObject.put("retCode", 10000);
-					jsonObject.put("jumpurl", "/pages/toLogin");
-					
-					PrintWriter out=response.getWriter();
-					out.print(jsonObject.toJSONString());
-					out.close();
-					out.flush();
+				Map<String,String> loginInfo=getLoginInfo(request);
+
+				if(loginInfo==null){
+					this.setLoginToJumpUrl(path, request, response);
 					return false;
 				}
 			}
 		}
+		if(StringUtils.isBlank(referer) && path.equals(loginUrl)){
+			Map<String,String> loginInfo=getLoginInfo(request);
+			if(loginInfo==null){
+				request.setAttribute("jumpurl", webUrlsList.get(0));
+				return true;
+			}else{
+				response.sendRedirect(webUrlsList.get(0));
+				return false;
+			}
+		}else if(webUrlsList.contains(referer) && path.equals(loginUrl)){
+			Map<String,String> loginInfo=getLoginInfo(request);
+			if(loginInfo==null){
+				request.setAttribute("jumpurl", referer);
+				return true;
+			}else{
+				response.sendRedirect(referer);
+				return false;
+			}
+		}
 		return true;
 	}
-
+	private Map<String,String> getLoginInfo(HttpServletRequest request){
+		HttpSession session=request.getSession();
+		
+		Map<String,String> loginInfo=(Map<String,String>)session.getAttribute("loginInfo");
+		return loginInfo;
+		
+	}
+	private void setLoginToJumpUrl(String path,HttpServletRequest request,HttpServletResponse response) throws Exception{
+		if(path.matches(toRegex) || path.matches(doRegex)){
+			request.setAttribute("jumpurl", path);
+			request.getRequestDispatcher(loginUrl).forward(request, response);
+		}else if(path.matches(ajaxRegex)){
+			PrintWriter out=response.getWriter();	
+			JSONObject jsonObject=new  JSONObject();
+			jsonObject.put("retCode", 10000);
+			jsonObject.put("jumpurl", loginUrl);
+			out.print(jsonObject.toJSONString());
+			out.close();
+			out.flush();
+		}
+	}
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
-		System.out.println("------rr++");
+	}
+	public static void main(String[] args) {
+		System.out.println("/wegweg/doxxxxxx".matches(".*/to[^?.]+.*"));
 	}
 
 }

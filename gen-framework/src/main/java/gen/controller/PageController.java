@@ -18,14 +18,9 @@ import gen.services.DirectoryDataService;
 @RequestMapping("/pages")
 public class PageController {
 	
-	@Value("${gen.framework.login.url}")
-	private String loginurl;
+
 	
-	@Value("${gen.framework.manager.url}")
-	private String managerurl;
-	
-	@Value("${gen.framework.web.url}")
-	private String weburl;
+
 	
 	@Autowired
 	private DirectoryDataService directoryDataService;
@@ -42,14 +37,14 @@ public class PageController {
 	}
 	@RequestMapping("toLogin")
 	public String toLogin(ModelMap model,HttpServletRequest request){
-		String referer=request.getHeader("referer");
+		/*String referer=request.getHeader("referer");
 		System.out.println(request.getRequestURI());
 		if(referer==null && request.getRequestURI().startsWith("/manager/")){
 			referer=request.getRequestURI();
 		}else if(referer==null || referer.equals(loginurl)){
 			referer=weburl;
 		}
-		model.addAttribute("jumpurl", referer);
+		model.addAttribute("jumpurl", referer);*/
 		return "pages/login";
 	}
 	@RequestMapping("toShenPi")
