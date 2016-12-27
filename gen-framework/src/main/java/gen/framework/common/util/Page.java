@@ -19,7 +19,7 @@ public  class Page<E> {
         }
         this.pageSize = pageSize;  
         this.startRow = pageNum > 0 ? (pageNum - 1) * pageSize : 0;  
-        this.endRow = pageNum * pageSize;  
+        this.endRow = pageSize;  
     }  
 
     public List<E> getResult() {  

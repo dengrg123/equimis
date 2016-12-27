@@ -1,12 +1,15 @@
 package gen.services;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,7 +21,9 @@ import gen.framework.common.beans.CommonInsertBean;
 import gen.framework.common.beans.CommonSearchBean;
 import gen.framework.common.beans.CommonUpdateBean;
 import gen.framework.common.dao.CommonMapper;
+import gen.framework.common.util.Page;
 
+@Service
 public class UserService {
 	@Autowired
 	private CommonMapper commonMapper;
@@ -47,8 +52,9 @@ public class UserService {
 		}
 		user.setPassword("123456");
 		user.setUserid(UUID.randomUUID().toString().replaceAll("-", ""));
+		user.setRegistertime(new Date());
 		CommonInsertBean cib=new CommonInsertBean("em_user",user);
-		//this.commonMapper.insertObjects(cib);
+		this.commonMapper.insertObject(cib);
 		result.put("retCode", "1");
 		result.put("retMsg", "添加成功");
 		return result.toJSONString();
@@ -86,7 +92,7 @@ public class UserService {
 		return result.toJSONString();
 
 	}
-	public String login(String account,String password){
+	public String login(String account,String password,String jumpurl,Map callbackMap){
 		JSONObject result=new  JSONObject();
 		if(StringUtils.isBlank(account) || StringUtils.isBlank(password)){
 			result.put("retCode", "-14");
@@ -97,16 +103,36 @@ public class UserService {
 		Map<String,Object> condition=new HashMap<String,Object>();
 		condition.put("account", account);
 		condition.put("password", password);
-		CommonSearchBean csb=new CommonSearchBean("em_user", null, "userid", null,null,condition);
+		CommonSearchBean csb=new CommonSearchBean("em_user", null, "userid,account,name", null,null,condition);
 		List userIdList=this.commonMapper.selectObjects(csb);
 		if(userIdList!=null && !userIdList.isEmpty()){
+			callbackMap.put("userInfo", userIdList.get(0));
 			result.put("retCode", "1");
 			result.put("retMsg", "登录成功");
+			result.put("jumpurl", jumpurl);
 		}else{
 			result.put("retCode", "-15");
 			result.put("retMsg", "登录失败");
 		}
-
 		return result.toJSONString();
+	}
+	public Page list(Integer pageNum, Integer pageSize)throws Exception{
+		Page page=new Page(pageNum, pageSize);
+		Map<String,Object> condition=null;;
+
+
+		CommonSearchBean csb=new CommonSearchBean("em_user","REGISTERTIME  DESC",null, page.getStartRow(),page.getEndRow(),condition);
+		CommonCountBean ccb = new CommonCountBean();
+
+		PropertyUtils.copyProperties(ccb, csb);
+		long count = commonMapper.selectCount(ccb);
+		if(count>0){
+			List list=this.commonMapper.selectObjects(csb);
+			System.out.println(list);
+			page.setResult(list);
+			page.setTotal(count);
+		}
+
+		return page;
 	}
 }

@@ -12,7 +12,7 @@ body{font-family:Arial, Helvetica, sans-serif;padding:0;font-size:12px;margin:0 
 a, span.tag{ text-decoration:none;}
 a.view_details{padding:0 0 0 15px;}
 .swiper-container{ width:800px;height: 100%;}
-#header{ position:absolute; top:0px; left:0px; z-index:9999; width:94%; height:40px;padding:6px 3%;}
+#header{ position:absolute; top:0px; left:0px; z-index:100; width:94%; height:40px;padding:6px 3%;}
 
 /* Headings
 /*------------------------------------------*/
@@ -110,7 +110,7 @@ ul.listing_detailed li a{}
 /*------------------------------------------*/
 ul.tabsmenu{ padding:0; position:relative; bottom:-1px;}
 ul.tabsmenu li a{ width:31.2%; float:left; padding:12px 0 12px 0; margin:0 2% 0 0;text-align:center;}
-ul.tabsmenu li:last-child a{ float:right; margin:0 0 0 0;}
+ul.tabsmenu li:last-child a{ float:left; margin:0 0 0 0;}
 ul.tabsmenu li.active a{font-weight:bold;}
 .tabcontent{ padding:5% 4%; clear:both; margin:0 0 10px 0;}
 /*-----------------Photo Gallery style-------------------*/

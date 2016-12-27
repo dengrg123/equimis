@@ -1,3 +1,10 @@
+body {
+  font-family: "Open Sans", sans-serif;
+  height: 100vh;
+  
+  background-size: cover;
+}
+
 @keyframes spinner {
   0% {
     transform: rotateZ(0deg);
@@ -6,9 +13,11 @@
     transform: rotateZ(359deg);
   }
 }
-body{overflow:hidden;}
-.loginwrapper input {
+* {
   box-sizing: border-box;
+}
+.redbg{
+	background: red;
 }
 .loginwrapper {
   display: flex;
@@ -18,9 +27,7 @@ body{overflow:hidden;}
   width: 100%;
   min-height: 100%;
   padding: 20px;
-  position: absolute;
-  z-index: 1000;
-visibility: hidden;
+  background: rgba(4, 40, 68, 0.85);
 }
 
 .login {

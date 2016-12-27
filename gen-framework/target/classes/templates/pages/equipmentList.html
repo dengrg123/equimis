@@ -17,11 +17,6 @@
 <link type="text/css" rel="stylesheet" href="/gomobile/2/colors/medical/medical.css"/>
 <link type="text/css" rel="stylesheet" href="/gomobile/2/css/idangerous.swiper.css"/>
 <link type="text/css" rel="stylesheet" href="/gomobile/2/css/swipebox.css"/>
-<link href="/gomobile/2/js/mobiscroll/dev/css/mobiscroll.core-2.6.2.css" rel="stylesheet" type="text/css" />
-<link href="/gomobile/2/js/mobiscroll/dev/css/mobiscroll.animation-2.6.2.css" rel="stylesheet" type="text/css" />
-<link href="/gomobile/2/js/mobiscroll/dev/css/mobiscroll.animation-2.6.2.css" rel="stylesheet" type="text/css" />
-<link href="/login/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-<link href="/login/css/login.css" rel="stylesheet" type="text/css" />
 
 <style type="text/css">
 	*{font-family:微软雅黑;}
@@ -46,25 +41,14 @@
 </style>
 </head>
 <body>
-<div class="loginwrapper" id="loginwrapper">
-	<form class="login">
-		<p class="title">Log in</p>
-		<input type="text" placeholder="Username" autofocus="autofocus"/>
-		<i class="fa fa-user"></i>
-		<input type="password" placeholder="Password" />
-		<i class="fa fa-key"></i>
-	
-		<button>
-			<i class="spinner"></i>
-			<span class="state">登　入</span>
-		</button>
-	</form>
 
-</div>
 
   <div id="header">
-      <div class="gohome"><a href="#"><img src="/gomobile/2/images/icons/home.png" alt="" title="" /></a></div>
-      <div class="gomenu"><a href="#" onclick="swiperParent.swipeTo(5);"><img src="/gomobile/2/images/icons/about.png" alt="" title="" /></a></div>
+      <div class="gohome"><a href="/pages/toEquipmentList"><img src="/gomobile/2/images/icons/home.png" alt="" title="" /></a></div>
+      <div class="gomenu">
+      <a href=""  th:if="${session.loginInfo!=null?true:false}"><img src="/gomobile/2/images/icons/about.png" alt="" title="" /></a>
+      <a href="/pages/toLogin"  th:if="${session.loginInfo==null?true:false}">登录</a>
+      </div>
   </div>
 
       <div class="swiper-container swiper-parent">
@@ -152,16 +136,12 @@
 <script type="text/javascript" src="/gomobile/2/js/jquery.swipebox.js"></script>
 <script type="text/javascript" src="/gomobile/2/js/idangerous.swiper-2.1.min.js"></script>
 <script type="text/javascript" src="/gomobile/2/js/idangerous.swiper.scrollbar-2.1.js"></script>
-<script type="text/javascript" src="/gomobile/2/js/jquery.tabify.js"></script>
-<script type="text/javascript" src="/gomobile/2/js/jquery.fitvids.js"></script>
+
 <script type="text/javascript" src="/gomobile/2/js/code.js"></script>
 <script type="text/javascript" src="/gomobile/2/js/load.js"></script>
- <script src="/gomobile/2/js/mobiscroll/dev/js/mobiscroll.core-2.6.2.js" type="text/javascript"></script>
-<script src="/gomobile/2/js/mobiscroll/dev/js/mobiscroll.core-2.6.2-zh.js" type="text/javascript"></script>
-<script src="/gomobile/2/js/mobiscroll/dev/js/mobiscroll.datetime-2.6.2.js" type="text/javascript"></script>
-<script src="/login/js/index.js" type="text/javascript"></script>
+
 <script type="text/javascript"  th:inline="javascript">
-	var isLogin=false;
+	var isLogin= /*[[${session.loginInfo!=null?true:false}]]*/;
 	/* <![CDATA[*/
 	var otherDept= /*[[${deptList}]]*/
 	function toSubmit(){
@@ -173,7 +153,8 @@
 					swiperNested4.reInit();
 					swiperNested4.swipeTo(0);
 				});
-
+			}else if(data.retCode==10000){
+				location.href=data.jumpurl;
 			}else{
 				alert(data.retMsg);
 			}
@@ -238,7 +219,7 @@
 			pageNum=data.nextPageNo;
 			
 			for(var i=0;i<data.result.length;i++){
-				var itemhtml='<div class="portfolio_item">';
+				var itemhtml='<div class="portfolio_item" id="item'+i+'">';
 				itemhtml+='<div class="portfolio_image"><a rel="gallery-1" href="http://202.116.161.6:8180/equimis/inlineStream.action?path=';
 				
 				itemhtml+=data.result[i].PATH+'&contentType='+data.result[i].CONTENTTYPE;
@@ -262,7 +243,7 @@
 	}
 	function toAppointment(obj,eid){
 		if(!isLogin){
-			$("#loginwrapper").css("visibility","visible");
+			 location.href="/pages/toLogin"
 			return ;
 		}
 		 swiperNested4.swipeTo(0);
@@ -320,6 +301,7 @@
 			prevobj.before(itemhtml);
 			$(obj).prev().slideDown("normal",function(){
 				swiperNested4.reInit();
+				location.href=location.href.replace("#","")+"#"+$(obj).parent().attr("id");
 			});
 			
 		},"JSON");

@@ -1,15 +1,14 @@
 package gen.services;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.UUID;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.asm.Label;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -90,6 +89,7 @@ public class AppointmentService {
 				
 		appointmentBean.setId(UUID.randomUUID().toString().replaceAll("-", ""));
 		appointmentBean.setStatus(0);
+		appointmentBean.setApplytime(new Date());
 		CommonInsertBean cib=new CommonInsertBean("em_appointment", appointmentBean);
 		
 		this.commonMapper.insertObject(cib);
@@ -97,6 +97,25 @@ public class AppointmentService {
 		result.put("retMsg", "添加成功");
 		return result.toJSONString();
 		
+	}
+	@Transactional(propagation = Propagation.REQUIRED)
+	public String shenpi(String id,String auditmessage,Integer status){
+		JSONObject result=new  JSONObject();
+		if(StringUtils.isBlank(auditmessage)){
+			result.put("retCode", "-20");
+			result.put("retMsg", "请填写评价");
+			return result.toJSONString();
+		}
+		if(status==null){
+			result.put("retCode", "-20");
+			result.put("retMsg", "请选择审批类型");
+			return result.toJSONString();
+		}
+		AppointmentBean appointmentBean=new AppointmentBean();
+		appointmentBean.setId(id);
+		appointmentBean.setAuditmessage(auditmessage);
+		appointmentBean.setStatus(status);
+		return this.update(appointmentBean);
 	}
 	@Transactional(propagation = Propagation.REQUIRED)
 	public String update(AppointmentBean appointmentBean){
@@ -111,7 +130,7 @@ public class AppointmentService {
 			result.put("retMsg", "流水号为空");
 			return result.toJSONString();
 		}
-		Map<String,Object> params=new HashMap<String,Object>();
+	/*	Map<String,Object> params=new HashMap<String,Object>();
 		if(appointmentBean.getBegintime()!=null && appointmentBean.getEndtime()!=null){
 			params.put("begintime", appointmentBean.getBegintime());
 			params.put("endtime", appointmentBean.getEndtime());
@@ -119,18 +138,19 @@ public class AppointmentService {
 		}else if(appointmentBean.getStatus()!=null && appointmentBean.getStatus()==-1){
 			params.put("status", appointmentBean.getStatus());
 			result.put("retMsg", "取消成功");
-		}
+		}*/
+		
 		Map<String,Object> condition=new HashMap<String,Object>();
 		condition.put("id", appointmentBean.getId());
-		CommonUpdateBean cub=new CommonUpdateBean("em_appointment", params, condition);
+		CommonUpdateBean cub=new CommonUpdateBean("em_appointment", appointmentBean, condition);
 		this.commonMapper.updateObject(cub);
 		result.put("retCode", "1");
 		
 		return result.toJSONString();
 		
 	}
-	public String list(String userid,Integer pageNum,Integer pageSize)throws Exception{
-		JSONObject result=new  JSONObject();
+	public Page list(String userid,Integer pageNum,Integer pageSize)throws Exception{
+	
 		Page page=new Page(pageNum, pageSize);
 		Map<String,Object> condition=null;;
 
@@ -138,20 +158,19 @@ public class AppointmentService {
 			 condition=new HashMap<String,Object>();
 			condition.put("userid", userid);
 		}
-		CommonSearchBean csb=new CommonSearchBean("em_appointment",null,null, page.getStartRow(),page.getEndRow(),condition);
+		CommonSearchBean csb=new CommonSearchBean("em_appointment","applytime  DESC",null, page.getStartRow(),page.getEndRow(),condition);
 		CommonCountBean ccb = new CommonCountBean();
 
 		PropertyUtils.copyProperties(ccb, csb);
 		long count = commonMapper.selectCount(ccb);
 		if(count>0){
 			List list=this.commonMapper.selectObjects(csb);
+			System.out.println(list);
 			page.setResult(list);
 			page.setTotal(count);
 		}
-		result.put("retCode", "1");
-		result.put("retMsg", "success");
-		result.put("data", page);
-		return result.toJSONString();
+
+		return page;
 	}
 	public static void main(String[] args) {
 		String key="wef";

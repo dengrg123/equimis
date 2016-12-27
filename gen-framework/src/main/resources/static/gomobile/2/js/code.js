@@ -177,8 +177,7 @@ jQuery(function($) {
 $(".swipebox").swipebox();
 });
 $(function() {
-$('#tabsmenu').tabify();
-$(".videocontainer").fitVids();
+
 $(".toggle_container").hide();
 $(".toggle_container_blog").hide();
 $(".trigger").click(function(){

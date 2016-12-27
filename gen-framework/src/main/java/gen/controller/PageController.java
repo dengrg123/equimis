@@ -2,7 +2,10 @@ package gen.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +17,16 @@ import gen.services.DirectoryDataService;
 @Controller
 @RequestMapping("/pages")
 public class PageController {
+	
+	@Value("${gen.framework.login.url}")
+	private String loginurl;
+	
+	@Value("${gen.framework.manager.url}")
+	private String managerurl;
+	
+	@Value("${gen.framework.web.url}")
+	private String weburl;
+	
 	@Autowired
 	private DirectoryDataService directoryDataService;
 	@RequestMapping("toEquipmentList")
@@ -28,8 +41,23 @@ public class PageController {
 		return "pages/equipmentList";
 	}
 	@RequestMapping("toLogin")
-	public String toLogin(ModelMap model){
-		
+	public String toLogin(ModelMap model,HttpServletRequest request){
+		String referer=request.getHeader("referer");
+		System.out.println(request.getRequestURI());
+		if(referer==null && request.getRequestURI().startsWith("/manager/")){
+			referer=request.getRequestURI();
+		}else if(referer==null || referer.equals(loginurl)){
+			referer=weburl;
+		}
+		model.addAttribute("jumpurl", referer);
 		return "pages/login";
+	}
+	@RequestMapping("toShenPi")
+	public String toShenPi(String eid){
+		return "pages/manager/shenpi";
+	}
+	@RequestMapping("toEditUser")
+	public String toEditUser(String eid){
+		return "pages/manager/editUser";
 	}
 }
