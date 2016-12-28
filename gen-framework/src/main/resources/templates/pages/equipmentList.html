@@ -50,7 +50,7 @@
   <div id="header">
 
       <div class="gohome"><a href="/pages/toEquipmentList"><img src="/gomobile/2/images/icons/home.png" alt="" title="" /></a></div>
-      <div class="gomenu">
+      <div class="gomenu" style="line-height: 35px">
       <a href=""  th:if="${session.loginInfo!=null?true:false}"><img src="/gomobile/2/images/icons/about.png" alt="" title="" /></a>
       <a href="/pages/toLogin"  th:if="${session.loginInfo==null?true:false}">登录</a>
       </div>
@@ -76,11 +76,11 @@
 			                                <input type="text" id="subjectName"  class="form_input"/>
 			                                <label style="font-size: 14px">类型：</label>
 			                                <input type="text"  id="typeName" class="form_input"/>
-			                                                                <a  href="#" th:each="model:${deptListTop10}" th:inline="text" onclick='changeBg(this)'  class="button_13 green green_borderbottom">
+			                                <a  href="#" th:each="model:${deptListTop10}" th:inline="text" onclick='changeBg(this)'  class="button_13 green green_borderbottom">
 			                                          [[${model['name']}]]
 			                                          <input type="hidden" name="deptid"  th:value="${model['ID']}"/>
-			                                          </a>
-												<a  href="javascript:void(0)" onclick="moreDept(this)" th:if="${deptList!=null and !deptList.isEmpty()}" style="float:left;margin-top:10px;">更多...</a>
+			                                 </a>
+												<a  href="javascript:void(0)" onclick="moreDept(this)" th:if="${deptList!=null and !deptList.isEmpty()}" style="float:right;margin-top:10px;">更多...</a>
 												 <a href="#" onclick="getData(this.parentNode)" class="button_14 bluegreen bluegreen_borderbottom">搜　索</a>
 			                                </form>
 			                                </div>
@@ -163,6 +163,7 @@
 		obj.onclick=function(){
 			$(".md").hide();
 			swiperNested4.reInit();
+			
 			var nobj=$(this);
 			
 			nobj.text("更多...");
@@ -213,20 +214,35 @@
 		
 	})
 
+	
 	var pageNum;
-	var pageSize;
-	function getData(formid){
-		var params=null;
-		if(formid!=undefined){
-			$(".portfolio_item").remove();
-			params={
-				subjectName:$("#subjectName").val(), 
-				typeName:$("#typeName").val(),
-				deptid:$("a.blue").length>=0?$("a.blue input").eq(0).val():null
-			}
+	var formsubjectName;
+	var formtypeName;
+	var formdeptid;
+	function getData(formid,nextNum){
+
+		
+		
+		if(formid!=undefined && formid!=null && formid!="null"){
+			$(".portfolio_item,#clickmore").remove();
+			formsubjectName=$("#subjectName").val();
+			formtypeName=$("#typeName").val();
+			formdeptid=$("a.blue").length>=0?$("a.blue input").eq(0).val():null;
+			pageNum=1;
 		}
+		if(nextNum!=undefined){
+			pageNum=nextNum
+		}
+		var params={
+				subjectName:formsubjectName, 
+				typeName:formtypeName,
+				deptid:formdeptid,
+				pageNum:pageNum
+			}
+		
 		$.post("/equipment/ajaxList",params,function(data){
-			pageNum=data.nextPageNo;
+			
+			
 			
 			for(var i=0;i<data.result.length;i++){
 				var itemhtml='<div class="portfolio_item" id="item'+i+'">';
@@ -243,9 +259,22 @@
 				itemhtml+='<p class="textp">'+data.result[i].emodel+'</p>';
 				itemhtml+='<p class="titlep">仪器介绍：</p>';
 				itemhtml+='<p class="textp">'+data.result[i].DESCRIPTION+'</p>';
-				itemhtml+='</div><a href="#" class="ext" onclick="getDataById(this)" eid="'+data.result[i].eid+'" style="float:right">更多...</a></div>';
-				$(".clearfix").before(itemhtml);
+				itemhtml+='</div><a href="#" class="ext" onclick="getDataById(this)" id="'+(Math.random()*5)+'"  eid="'+data.result[i].eid+'" style="float:right">更多...</a></div>';
+				if($("#clickmore").length>0){
+					$("#clickmore").before(itemhtml);
+				}else{
+					$(".clearfix").before(itemhtml);
+				}
+				
 			}
+			var loadStr='<a href="javascript:void(0)" onclick="getData(null,'+data.nextPageNo+')" id="clickmore">点击加载更多...</a>';
+			if($("#clickmore").length>0){
+				$("#clickmore").replaceWith(loadStr)
+	
+			}else{
+				$(".clearfix").before(loadStr)
+			}
+			
 			swiperNested4.reInit();
 			$("#inputf").html('<input type="text" id="subjectName3" value="werwer" />');
 			$("#subjectName3").focus();
@@ -271,6 +300,7 @@
 			var nobj=$(this);
 			nobj.prev().slideUp("false",function(){
 				nobj.prev().remove();
+				swiperNested4.swipeTo(0);
 				swiperNested4.reInit();
 			});
 			nobj.text("更多...");

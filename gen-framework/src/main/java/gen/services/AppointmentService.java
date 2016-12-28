@@ -192,6 +192,7 @@ public class AppointmentService {
 		
 
 	Date new2=DateUtils.parseDate(DateFormatUtils.format(date, "yyyy-MM-dd 23:59:59"), "yyyy-MM-dd HH:mm:ss");
+		condition.put(" (", null);
 		condition.put("(", null);
 		condition.put("begintime,<=", date);
 		condition.put("and", null);
@@ -201,6 +202,7 @@ public class AppointmentService {
 		condition.put("and ", null);
 		condition.put("endtime,>= ", new2);
 		condition.put(")", null);
+		condition.put(") ", null);
 		condition.put("and  ", null);
 		condition.put("equipmentid", equipmentid);
 		CommonSearchBean csb=new CommonSearchBean("em_appointment","applytime  DESC","date_format(begintime,'%Y%c%d%H%i') begindate,date_format(endtime,'%Y%c%d%H%i') enddate,date_format(audittime,'%Y%c%d %H%i') auditdate", null,null,condition);
@@ -215,6 +217,6 @@ public class AppointmentService {
 	}
 	public static void main(String[] args) {
 		String key="wef";
-		System.out.println( (!key.matches("and.*") && !key.matches("or.*")));
+		System.out.println(") ".matches("[)]"));
 	}
 }

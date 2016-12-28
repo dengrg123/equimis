@@ -56,7 +56,7 @@
 				</when>
 				<otherwise>
 				<choose>
-					<when test="key.matches('[(]') or key.matches('[)]') or key.matches('[)] or [(]') or key.matches('or.*') or key.matches('and.*')">
+					<when test="key.indexOf('(')>-1 or key.indexOf(')')>-1 or key.matches('[)] or [(]') or key.matches('or.*') or key.matches('and.*')">
 						${key}
 					</when>
 					<otherwise>
@@ -135,7 +135,7 @@
 				</when>
 				<otherwise>
 				<choose>
-					<when test="key.matches('[(]') or key.matches('[)]') or key.matches('[)] or [(]') or key.matches('or.*') or key.matches('and.*')">
+					<when test="key.indexOf('(')>-1 or key.indexOf(')')>-1 or key.matches('[)] or [(]') or key.matches('or.*') or key.matches('and.*')">
 						${key}
 					</when>
 					<otherwise>

@@ -30,7 +30,10 @@ scrollbar: {
   container :'.swiper-scrollbar4',
   hide: true,
   draggable: false  
-}
+},
+onReachEnd: function(swiper){
+    alert();
+   }
 })
 
 var swiperNestedsingle = new Swiper('.swiper-nestedsingle', {

@@ -61,7 +61,7 @@ public class EquipmentService {
 		CommonSearchBean commonSearchBean=new CommonSearchBean("em_equipment","LASTUPDATE DESC","t1.NAME ename,t1.MODEL emodel,t1.CODE ecode,t1.id eid,t1.DESCRIPTION ,PATH,CONTENTTYPE",page.getStartRow(),page.getEndRow(),condition,
 				new CommonChildBean("em_assettype", "code", "ASSETTYPECODE", condition_assettype),
 				new CommonChildBean("em_subject", "code", "SUBJECTCODE", condition_subject),
-				new CommonChildBean("em_equipmentphoto", "EQUIPMENTID", "ID", null));
+				new CommonChildBean("(select * from em_equipmentphoto ee GROUP BY ee.EQUIPMENTID)", "EQUIPMENTID", "ID", null));
 
 		CommonCountBean ccb = new CommonCountBean();
 

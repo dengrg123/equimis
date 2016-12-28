@@ -25,7 +25,7 @@ public class EquipmentController {
 			String subjectName,
 			String deptid,
 			@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
-			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize){
+			@RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize){
 		try {
 			return this.equipmentService.equipmentList(typeName, subjectName, deptid, pageNum, pageSize);
 		} catch (Exception e) {
