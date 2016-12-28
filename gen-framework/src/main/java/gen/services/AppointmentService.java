@@ -1,5 +1,6 @@
 package gen.services;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -9,6 +10,8 @@ import java.util.UUID;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -94,7 +97,7 @@ public class AppointmentService {
 		
 		this.commonMapper.insertObject(cib);
 		result.put("retCode", "1");
-		result.put("retMsg", "添加成功");
+		result.put("retMsg", "申请预约成功");
 		return result.toJSONString();
 		
 	}
@@ -172,6 +175,43 @@ public class AppointmentService {
 		}
 
 		return page;
+	}
+	public String appoCircs(String equipmentid,Date date) throws Exception{
+		JSONObject result=new  JSONObject();
+		
+		if(StringUtils.isBlank( equipmentid)){
+			result.put("retCode", "-8");
+			result.put("retMsg", "缺少流水号参数");
+			return result.toJSONString();
+		}
+		LinkedHashMap<String,Object>  condition=new LinkedHashMap<String,Object>();
+		
+		if(date==null){
+			date=DateUtils.parseDate(DateFormatUtils.format(new Date(), "yyyy-MM-dd 00:00:00"), "yyyy-MM-dd HH:mm:ss");
+		}
+		
+
+	Date new2=DateUtils.parseDate(DateFormatUtils.format(date, "yyyy-MM-dd 23:59:59"), "yyyy-MM-dd HH:mm:ss");
+		condition.put("(", null);
+		condition.put("begintime,<=", date);
+		condition.put("and", null);
+		condition.put("endtime,>=", date);
+		condition.put(") or (", null);
+		condition.put("begintime,<= ", new2);
+		condition.put("and ", null);
+		condition.put("endtime,>= ", new2);
+		condition.put(")", null);
+		condition.put("and  ", null);
+		condition.put("equipmentid", equipmentid);
+		CommonSearchBean csb=new CommonSearchBean("em_appointment","applytime  DESC","date_format(begintime,'%Y%c%d%H%i') begindate,date_format(endtime,'%Y%c%d%H%i') enddate,date_format(audittime,'%Y%c%d %H%i') auditdate", null,null,condition);
+		csb.setAuto(false);
+
+
+		result.put("retCode", "1");
+		result.put("retMsg", "success");
+		result.put("result", this.commonMapper.selectObjects(csb));
+	
+		return result.toJSONString();
 	}
 	public static void main(String[] args) {
 		String key="wef";

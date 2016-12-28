@@ -13,10 +13,14 @@
 <meta name="description" content="GoMobile - A next generation web app theme" />
 <meta name="keywords" content="mobile web app, mobile template, mobile design, mobile app design, mobile app theme, mobile wordpress theme, my mobile app" />
 <title>仿GoMobile触屏版html5响应式手机app网站模板下载经典-pppf.taobao.com整理搜集仅用于学习</title>
+<link type="text/css" rel="stylesheet" href="/layui/css/layui.css"/>
 <link type="text/css" rel="stylesheet" href="/gomobile/2/css/style.css"/>
 <link type="text/css" rel="stylesheet" href="/gomobile/2/colors/medical/medical.css"/>
 <link type="text/css" rel="stylesheet" href="/gomobile/2/css/idangerous.swiper.css"/>
 <link type="text/css" rel="stylesheet" href="/gomobile/2/css/swipebox.css"/>
+<link href="/gomobile/2/js/mobiscroll/dev/css/mobiscroll.core-2.6.2.css" rel="stylesheet" type="text/css" />
+<link href="/gomobile/2/js/mobiscroll/dev/css/mobiscroll.animation-2.6.2.css" rel="stylesheet" type="text/css" />
+<link href="/gomobile/2/js/mobiscroll/dev/css/mobiscroll.animation-2.6.2.css" rel="stylesheet" type="text/css" />
 
 <style type="text/css">
 	*{font-family:微软雅黑;}
@@ -44,6 +48,7 @@
 
 
   <div id="header">
+
       <div class="gohome"><a href="/pages/toEquipmentList"><img src="/gomobile/2/images/icons/home.png" alt="" title="" /></a></div>
       <div class="gomenu">
       <a href=""  th:if="${session.loginInfo!=null?true:false}"><img src="/gomobile/2/images/icons/about.png" alt="" title="" /></a>
@@ -54,65 +59,34 @@
       <div class="swiper-container swiper-parent">
     <div class="swiper-wrapper">
 
-      <div class="swiper-slide sliderbg ">
+      <div class="swiper-slide sliderbg swiper-slide-visible swiper-slide-active">
       <div class="swiper-container swiper-nested4">
                <div class="swiper-wrapper">
                     <div class="swiper-slide">
+                      
                               <div class="slide-inner">
                                         <div class="pages_container">
                                         <h2 class="page_title">设备列表</h2>
                                         <div class="toogle_wrap">
                                             <div class="trigger"><a href="#">条件筛选</a></div>
                                             <div class="toggle_container" style="display:none">
-                                            <form action="">
-                                            <ul class="listing_detailed">
-                                            <li><span>学科：</span><span><input id="subjectName" /></span></li>
-                                            <li><span>类型：</span><span><input id="typeName"/></span></li>
-                                            </ul>
-                                            <a  href="#" th:each="model:${deptListTop10}" th:inline="text" onclick='changeBg(this)' class="button_13 green green_borderbottom">
-                                            [[${model['name']}]]
-                                            <input type="hidden" name="deptid"  th:value="${model['ID']}"/>
-                                            </a>
-											<a  href="javascript:void(0)" onclick="moreDept(this)" th:if="${deptList!=null and !deptList.isEmpty()}" style="float:left;margin-top:10px;">更多...</a>
-											 <a href="#" onclick="getData(this.parentNode)" class="button_14 bluegreen bluegreen_borderbottom">搜　索</a>
-                                            </form>
+										 <div class="form">
+			                                <form action="">
+			                                <label style="font-size: 14px">学科：</label>
+			                                <input type="text" id="subjectName"  class="form_input"/>
+			                                <label style="font-size: 14px">类型：</label>
+			                                <input type="text"  id="typeName" class="form_input"/>
+			                                                                <a  href="#" th:each="model:${deptListTop10}" th:inline="text" onclick='changeBg(this)'  class="button_13 green green_borderbottom">
+			                                          [[${model['name']}]]
+			                                          <input type="hidden" name="deptid"  th:value="${model['ID']}"/>
+			                                          </a>
+												<a  href="javascript:void(0)" onclick="moreDept(this)" th:if="${deptList!=null and !deptList.isEmpty()}" style="float:left;margin-top:10px;">更多...</a>
+												 <a href="#" onclick="getData(this.parentNode)" class="button_14 bluegreen bluegreen_borderbottom">搜　索</a>
+			                                </form>
+			                                </div>
                                             </div>
                                         </div>
-                                        <div class="portfolio_item" id="formdiv" style="display: none">
-                                        <div style="position:relative;height: 20px;width:100%;text-align: right;margin-top: -10"><a href="javascript:void(0)" onclick="$('#formdiv').hide()">关闭</a></div>
-                                        	<form>
-                                        	<input type="hidden" id="equipmentid" name="equipmentid" />
-											<p class="textp" >项目名称：<input type="text" name="projectname" style="width:80%;height:30px;border:1px solid #f4f4f4;"/></p>
-											<p class="textp" >项目类型：
-											<select name="projecttypecode"  style="width:80%;height:30px;border:1px solid #f4f4f4;">
-												<option th:each="model:${projecttype}" th:value="${model['code']}" th:text="${model['name']}"></option>
-											</select>
-											</p>
-											
-											<p class="textp" >　项目人：<input type="text" name="projectmanager"  th:value="${session.loginInfo!=null?session.loginInfo['name']:''}"  disabled="disabled"  style="width:80%;height:30px;border:1px solid #f4f4f4;"/></p>
-											
-											<p class="textp" >预约类型：
-											<select name="appointmentType"  style="width:80%;height:30px;border:1px solid #f4f4f4;">
-												<option value="自主上机">自主上机</option>
-												<option value="委托上机">委托上机</option>
-											</select>
-											</p>
-											<p class="textp" >开始时间：<input name="begintime" id="begintime" style="width:80%;height:30px;border:1px solid #f4f4f4;"/></p> 
-											<p class="textp" >结束时间：<input name="endtime" id="endtime" style="width:80%;height:30px;border:1px solid #f4f4f4;"/></p> 
-											<p class="textp" >使用功能：
-												<select name="useTypeCode"  style="width:80%;height:30px;border:1px solid #f4f4f4;">
-													<option th:each="model:${useTypeCode}" th:value="${model['code']}" th:text="${model['name']}"></option>
-												</select>
-											</p>  
-											<p class="textp" >样口名称：<input name="samplename" style="width:80%;height:30px;border:1px solid #f4f4f4;"/></p>
-											<p class="textp" >样口数量：<input name="samples" style="width:80%;height:30px;border:1px solid #f4f4f4;"/></p>
-											<p class="textp" >　操作人：<input type="text" name="handler" style="width:80%;height:30px;border:1px solid #f4f4f4;"/></p>
-											<p class="textp" >　　备注：<textarea name="com_remark"  rows="" cols="" style="width:80%;height:60px;border:1px solid #f4f4f4;"></textarea>
-											</p>
-											<a href="#" class="button_12 green green_borderbottom" onclick="toSubmit()" >提交</a>
-											<a href="#" class="button_12 green green_borderbottom" >重置</a>
-											</form>
-                                        </div>
+                                     
                                         <div class="clearfix"></div>
       									<div class="scrolltop"><a href="#" class="scrolltop4"><img src="/gomobile/2/images/icons/top.png" alt="Go on top" title="Go on top" /></a></div>
                                         </div>
@@ -136,14 +110,27 @@
 <script type="text/javascript" src="/gomobile/2/js/jquery.swipebox.js"></script>
 <script type="text/javascript" src="/gomobile/2/js/idangerous.swiper-2.1.min.js"></script>
 <script type="text/javascript" src="/gomobile/2/js/idangerous.swiper.scrollbar-2.1.js"></script>
-
+ <script src="/gomobile/2/js/mobiscroll/dev/js/mobiscroll.core-2.6.2.js" type="text/javascript"></script>
+<script src="/gomobile/2/js/mobiscroll/dev/js/mobiscroll.core-2.6.2-zh.js" type="text/javascript"></script>
+<script src="/gomobile/2/js/mobiscroll/dev/js/mobiscroll.datetime-2.6.2.js" type="text/javascript"></script>
 <script type="text/javascript" src="/gomobile/2/js/code.js"></script>
 <script type="text/javascript" src="/gomobile/2/js/load.js"></script>
-
+<script type="text/javascript" src="/layui/layui.js"></script>
 <script type="text/javascript"  th:inline="javascript">
 	var isLogin= /*[[${session.loginInfo!=null?true:false}]]*/;
 	/* <![CDATA[*/
 	var otherDept= /*[[${deptList}]]*/
+	var layer = null;
+	function toCirs(eid){
+
+		
+		layer.open({
+			  type: 2, 
+			  area: ['90%','498px'],
+			 
+			  content: '/pages/toEquipmentCircs?equipmentid='+eid //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+		});
+	}
 	function toSubmit(){
 		
 		$.post("/appointment/ajaxSubmit",$("#formdiv form").serializeArray(),function(data){
@@ -161,13 +148,30 @@
 		},"JSON")
 	}
 	function moreDept(obj){
-		var deptsObj=eval("("+otherDept+")");
-		
-		for(var i=0;i<deptsObj.length;i++)
-		{
-			$(obj).before("<a  href='#'  class='button_13 green green_borderbottom' onclick='changeBg(this)'>"+deptsObj[i].name+"<input type='hidden' name='deptid'' value='"+deptsObj[i].ID+"'/></a>");
+		if($(".md").length==0){
+			var deptsObj=eval("("+otherDept+")");
+			
+			for(var i=0;i<deptsObj.length;i++)
+			{
+				$(obj).before("<a  href='#'  class='button_13 green green_borderbottom md'  onclick='changeBg(this)'>"+deptsObj[i].name+"<input type='hidden' name='deptid'' value='"+deptsObj[i].ID+"'/></a>");
+			}
+			deptsObj=null;
+			otherDept==null;
 		}
-		$(obj).remove();
+
+		$(obj).text("收起...");
+		obj.onclick=function(){
+			$(".md").hide();
+			swiperNested4.reInit();
+			var nobj=$(this);
+			
+			nobj.text("更多...");
+			this.onclick=function(){
+				$(".md").show();
+				swiperNested4.reInit();
+				moreDept(this);
+			}
+		}
 		swiperNested4.reInit();
 	}
 	function changeBg(obj){
@@ -188,6 +192,11 @@
 		}
 	}
 	$(function(){
+			layui.use(['layer'],function(){
+				layer=layui.layer;
+				
+		})
+		
 		getData();
 		var currentDate=new Date();
 		var curr = currentDate.getFullYear();
@@ -200,7 +209,8 @@
 		opt.tree_list = {preset : 'list', labels: ['Region', 'Country', 'City']};
 		opt.image_text = {preset : 'list', labels: ['Cars']};
 		opt.select = {preset : 'select'};
-		$('#begintime,#endtime').val('').scroller('destroy').scroller($.extend(opt['datetime'], { theme: 'default', mode: 'scroller', display: 'modal', lang:'zh' }));		
+		$('#begintime,#endtime').val('').scroller('destroy').scroller($.extend(opt['datetime'], { theme: 'default', mode: 'scroller', display: 'modal', lang:'zh' }));
+		
 	})
 
 	var pageNum;
@@ -225,7 +235,7 @@
 				itemhtml+=data.result[i].PATH+'&contentType='+data.result[i].CONTENTTYPE;
 				itemhtml+='" class="swipebox" title="Webdesign work"><img src="http://202.116.161.6:8180/equimis/inlineStream.action?path=';
 				itemhtml+=data.result[i].PATH+'&contentType='+data.result[i].CONTENTTYPE;
-				itemhtml+='" alt="" title="" border="0" /></a><a href="#" class="style_a style_a2" onclick="toAppointment(this,\''+data.result[i].eid+'\')">预约</a><a href="/pages/toEquipmentCircs"  target="_blank" class="style_a2" >预约情况</a></div>';
+				itemhtml+='" alt="" title="" border="0" /></a><a href="javascript:void(0)" class="style_a style_a2" onclick="toAppointment(this,\''+data.result[i].eid+'\')">预约</a><a href="javascript:void(0)" onclick="toCirs(\''+data.result[i].eid+'\')"  target="_blank" class="style_a2" >预约情况</a></div>';
 				itemhtml+='<div class="portfolio_details comment_row2"><h4>'+data.result[i].ename+'</h4>';
 				itemhtml+='<p class="titlep">编号：</p>';
 				itemhtml+='<p class="textp">'+data.result[i].ecode+'</p>';
@@ -237,20 +247,23 @@
 				$(".clearfix").before(itemhtml);
 			}
 			swiperNested4.reInit();
-			
+			$("#inputf").html('<input type="text" id="subjectName3" value="werwer" />');
+			$("#subjectName3").focus();
 			
 		},"JSON")
 	}
 	function toAppointment(obj,eid){
 		if(!isLogin){
-			 location.href="/pages/toLogin"
+			location.href="/pages/toLogin";
+			
 			return ;
 		}
-		 swiperNested4.swipeTo(0);
-		 $("#formdiv").slideToggle("fast",function(){
-			 $("#formdiv #equipmentid").val(eid);
-			 swiperNested4.reInit();
-		 });
+		layer.open({
+			  type: 2, 
+			  area: ['90%','468px'],
+			 
+			  content: '/pages/toEditAppol?eid='+eid //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+		});
 	}
 	function getDataById(obj){
 		$(obj).text("收起...");
@@ -301,7 +314,7 @@
 			prevobj.before(itemhtml);
 			$(obj).prev().slideDown("normal",function(){
 				swiperNested4.reInit();
-				location.href=location.href.replace("#","")+"#"+$(obj).parent().attr("id");
+				
 			});
 			
 		},"JSON");
