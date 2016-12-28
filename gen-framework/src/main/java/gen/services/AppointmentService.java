@@ -115,6 +115,7 @@ public class AppointmentService {
 		appointmentBean.setId(id);
 		appointmentBean.setAuditmessage(auditmessage);
 		appointmentBean.setStatus(status);
+		appointmentBean.setAudittime(new Date());
 		return this.update(appointmentBean);
 	}
 	@Transactional(propagation = Propagation.REQUIRED)

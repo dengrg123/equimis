@@ -89,7 +89,7 @@
 											</select>
 											</p>
 											
-											<p class="textp" >　项目人：<input type="text" name="projectmanager" style="width:80%;height:30px;border:1px solid #f4f4f4;"/></p>
+											<p class="textp" >　项目人：<input type="text" name="projectmanager"  th:value="${session.loginInfo!=null?session.loginInfo['name']:''}"  disabled="disabled"  style="width:80%;height:30px;border:1px solid #f4f4f4;"/></p>
 											
 											<p class="textp" >预约类型：
 											<select name="appointmentType"  style="width:80%;height:30px;border:1px solid #f4f4f4;">
@@ -225,7 +225,7 @@
 				itemhtml+=data.result[i].PATH+'&contentType='+data.result[i].CONTENTTYPE;
 				itemhtml+='" class="swipebox" title="Webdesign work"><img src="http://202.116.161.6:8180/equimis/inlineStream.action?path=';
 				itemhtml+=data.result[i].PATH+'&contentType='+data.result[i].CONTENTTYPE;
-				itemhtml+='" alt="" title="" border="0" /></a><a href="#" class="style_a style_a2" onclick="toAppointment(this,\''+data.result[i].eid+'\')">预约</a><a href="#" class="style_a2" >预约情况</a></div>';
+				itemhtml+='" alt="" title="" border="0" /></a><a href="#" class="style_a style_a2" onclick="toAppointment(this,\''+data.result[i].eid+'\')">预约</a><a href="/pages/toEquipmentCircs"  target="_blank" class="style_a2" >预约情况</a></div>';
 				itemhtml+='<div class="portfolio_details comment_row2"><h4>'+data.result[i].ename+'</h4>';
 				itemhtml+='<p class="titlep">编号：</p>';
 				itemhtml+='<p class="textp">'+data.result[i].ecode+'</p>';

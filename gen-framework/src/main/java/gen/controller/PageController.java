@@ -55,4 +55,8 @@ public class PageController {
 	public String toEditUser(String eid){
 		return "pages/manager/editUser";
 	}
+	@RequestMapping("toEquipmentCircs")
+	public String toEquipmentCircs(String eid){
+		return "pages/equipmentCircs";
+	}
 }

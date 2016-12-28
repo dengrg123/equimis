@@ -1,5 +1,9 @@
 package gen.controller;
 
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,8 +22,11 @@ public class AppointmentController {
 	
 	@RequestMapping(value="/ajaxSubmit",method=RequestMethod.POST)
 	@ResponseBody
-	public String ajaxSubmit(AppointmentBean appointmentBean){
+	public String ajaxSubmit(AppointmentBean appointmentBean,HttpSession session){
 		try {
+			Map<String,String> loginInfo=(Map<String,String>)session.getAttribute("loginInfo");
+			appointmentBean.setProjectname(loginInfo.get("name"));
+			appointmentBean.setUserid(loginInfo.get("id"));
 			return this.appointmentService.submit(appointmentBean);
 		} catch (Exception e) {
 			// TODO: handle exception
