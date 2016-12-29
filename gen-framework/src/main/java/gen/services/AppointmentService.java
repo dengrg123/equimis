@@ -72,7 +72,7 @@ public class AppointmentService {
 			return result.toJSONString();
 		}
 		LinkedHashMap condtion=new LinkedHashMap();
-		condtion.put("(", null);
+		condtion.put("((", null);
 		condtion.put("begintime,<=",appointmentBean.getBegintime());
 		condtion.put("and", null);
 		condtion.put("endtime,>=",appointmentBean.getBegintime());
@@ -80,7 +80,9 @@ public class AppointmentService {
 		condtion.put("begintime,<= ",appointmentBean.getEndtime());
 		condtion.put("and ", null);
 		condtion.put("endtime,>= ",appointmentBean.getEndtime());
-		condtion.put(")", null);
+		condtion.put("))", null);
+		condtion.put("and  ", null);
+		condtion.put("equipmentid", appointmentBean.getEquipmentid());
 		CommonCountBean ccb=new CommonCountBean("em_appointment",condtion);
 		ccb.setAuto(false);
 		long num=this.commonMapper.selectCount(ccb);
@@ -102,13 +104,16 @@ public class AppointmentService {
 		
 	}
 	@Transactional(propagation = Propagation.REQUIRED)
+	public String assess(String assess,String aid){
+		AppointmentBean appointmentBean=new AppointmentBean();
+		appointmentBean.setId(aid);
+		appointmentBean.setAssess(assess);
+		return this.update(appointmentBean);
+	}
+	@Transactional(propagation = Propagation.REQUIRED)
 	public String shenpi(String id,String auditmessage,Integer status){
 		JSONObject result=new  JSONObject();
-		if(StringUtils.isBlank(auditmessage)){
-			result.put("retCode", "-20");
-			result.put("retMsg", "请填写评价");
-			return result.toJSONString();
-		}
+
 		if(status==null){
 			result.put("retCode", "-20");
 			result.put("retMsg", "请选择审批类型");

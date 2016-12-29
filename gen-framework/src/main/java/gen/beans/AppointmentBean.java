@@ -121,6 +121,26 @@ public class AppointmentBean {
 	   public String sampleid;
 
 	   public String handler;
+	   
+	   private String appointmentType;
+	   
+	   private String assess;
+	   
+	public String getAssess() {
+		return assess;
+	}
+
+	public void setAssess(String assess) {
+		this.assess = assess;
+	}
+
+	public String getAppointmentType() {
+		return appointmentType;
+	}
+
+	public void setAppointmentType(String appointmentType) {
+		this.appointmentType = appointmentType;
+	}
 
 	public String getId() {
 		return id;

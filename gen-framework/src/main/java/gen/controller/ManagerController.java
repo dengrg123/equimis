@@ -1,5 +1,7 @@
 package gen.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -7,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import gen.beans.AppointmentBean;
 import gen.beans.UserBean;
 import gen.services.AppointmentService;
 import gen.services.UserService;
@@ -15,7 +16,7 @@ import gen.services.UserService;
 @Controller
 @RequestMapping("/manager")
 public class ManagerController {
-	
+	private static final Logger logger = LoggerFactory.getLogger(ManagerController.class);
 	@Autowired
 	private AppointmentService appointmentService;
 	@Autowired
@@ -30,11 +31,12 @@ public class ManagerController {
 		try {
 			model.addAttribute("appoPage", appointmentService.list(userid, pageNum, pageSize));
 		} catch (Exception e) {
+			logger.error("ManagerController.toCommon",e);
 			// TODO: handle exception
 			e.printStackTrace();
 		}
 	
-		return "pages/manager/commonpage";
+		return "pages/manager/commonPage";
 	}
 	@RequestMapping("toUserList")
 	public String userList(
@@ -45,9 +47,10 @@ public class ManagerController {
 			model.addAttribute("userPage", this.userService.list(pageNum, pageSize));
 		} catch (Exception e) {
 			// TODO: handle exception
+			logger.error("ManagerController.userList",e);
 			e.printStackTrace();
 		}
-		return "pages/manager/commonpage";
+		return "pages/manager/commonPage";
 	}
 	@RequestMapping("ajaxShenpi")
 	@ResponseBody
@@ -57,6 +60,7 @@ public class ManagerController {
 			return this.appointmentService.shenpi( id, auditmessage, status);
 		} catch (Exception e) {
 			// TODO: handle exception
+			logger.error("ManagerController.shenpi",e);
 			e.printStackTrace();
 			return "{\"retCode\":-1,\"retMsg\":\"系统出现异常\"}";
 		}
@@ -69,6 +73,7 @@ public class ManagerController {
 			return this.userService.add(user);
 		} catch (Exception e) {
 			// TODO: handle exception
+			logger.error("ManagerController.addUser",e);
 			e.printStackTrace();
 			return "{\"retCode\":-1,\"retMsg\":\"系统出现异常\"}";
 		}

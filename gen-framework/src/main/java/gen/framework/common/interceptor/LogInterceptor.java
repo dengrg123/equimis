@@ -90,7 +90,9 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
 				}
 			}
 		}
-		if(StringUtils.isBlank(referer) && path.equals(loginUrl)){
+		if(request.getAttribute("jumpurl")!=null && StringUtils.isBlank(referer) && path.equals(loginUrl)){
+			return true;
+		}else if(StringUtils.isBlank(referer) && path.equals(loginUrl)){
 			Map<String,String> loginInfo=getLoginInfo(request);
 			if(loginInfo==null){
 				request.setAttribute("jumpurl", webUrlsList.get(0));

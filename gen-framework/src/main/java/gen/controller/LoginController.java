@@ -3,9 +3,10 @@ package gen.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +17,7 @@ import gen.services.UserService;
 @Controller
 
 public class LoginController {
-	
+	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 		@Autowired
 		private UserService userService;
 	
@@ -32,6 +33,7 @@ public class LoginController {
 				}
 				return callback;
 			} catch (Exception e) {
+				logger.error("LoginController.login",e);
 				e.printStackTrace();
 				return "{\"retCode\":-1,\"retMsg\":\"系统出现异常\"}";
 			}
