@@ -37,6 +37,11 @@ public class LoginController {
 				e.printStackTrace();
 				return "{\"retCode\":-1,\"retMsg\":\"系统出现异常\"}";
 			}
-			
+		}
+		@RequestMapping("/doLogout")
+		public String logout(HttpSession session){
+			session.removeAttribute("loginInfo");
+			session.invalidate();
+			return "pages/login";
 		}
 }

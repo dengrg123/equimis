@@ -53,7 +53,7 @@ word-break:break-all;
     border:1px solid white;   /* 单元格边框 */  
     padding-top:4px; padding-bottom:4px;  
 	width:23.3%;
-	 	font-size: 12px;
+	 	font-size: 10px;
 } 
   .datalist .righttd{
   background:#D9D9D9;
@@ -75,7 +75,7 @@ border: 1px dashed ;
 </head>
 <body>
 
-
+  <div th:replace="pages/equipmentList :: #header"></div>
       <div class="swiper-container swiper-parent">
     <div class="swiper-wrapper">
 
@@ -122,12 +122,12 @@ border: 1px dashed ;
 													<span th:case="2">不通过</span>
 													
 												</td>
-                                        			<td class="righttd"></td>
-                                        			<td ></td>
+                                        			<td class="righttd"><div>审批意见</div></td>
+                                        			<td th:text="${model['AUDITMESSAGE']}"></td>
                                         		</tr>
                                                		<tr>
                                                		<td class="righttd"><div>评价</div></td>
-                                        			<td th:text="${model['AUDITMESSAGE']}" colspan="4">2</td>
+                                        			<td th:text="${model['ASSESS']}" colspan="4">2</td>
                                         			<td  align="right" th:switch="${model['STATUS']}">
                                         			<span th:case="0"><button class="layui-btn shenpi" th:attr="id=${model['ID']}"  style="padding: 0px;width: 80%" id="pingjie">审　批</button></span>
 													<span th:case="1">通过</span>

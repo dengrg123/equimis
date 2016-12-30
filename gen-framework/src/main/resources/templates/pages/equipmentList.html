@@ -48,14 +48,15 @@
 
       <div class="gohome">
       <a href="/pages/toEquipmentList"><img src="/gomobile/2/images/icons/home.png" alt="" title="" /></a>
-      
       </div>
-   		<div  class="gomenu" style="line-height: 45px;width: 50px;float: left" th:if="${session.loginInfo!=null?true:false}">
-   			<a href="/appointment/toAppoList" >我的预约</a>
+   		<div  class="gomenu2" style="line-height: 45px;float: left" th:if="${session.loginInfo!=null?true:false}">
+   			<a href="/appointment/toAppoList" th:if="${session.loginInfo['account']!='sysadmin'}">我的预约</a>
+   			<a href="/manager/toAppointmentList" th:if="${session.loginInfo['account']=='sysadmin'}">我的审批</a>
    		</div>
-      <div class="gomenu" style="line-height: 35px;;float: right;">
-      <a href=""  th:if="${session.loginInfo!=null?true:false}"><img src="/gomobile/2/images/icons/about.png" alt="" title="" /></a>
-      <a href="/pages/toLogin"  th:if="${session.loginInfo==null?true:false}">登录</a>
+      <div class="gomenu2" style="line-height: 45px;;float: right;">
+      <span th:if="${session.loginInfo!=null?true:false}" th:text="'欢迎【'+${session.loginInfo['name']!=null?session.loginInfo['name']:session.loginInfo['account']}+'】'"></span>
+      <a href="/pages/toLogin"  th:if="${session.loginInfo==null}">登录</a>
+      <a href="/doLogout"  th:if="${session.loginInfo!=null}">退出</a>
       </div>
 
   </div>

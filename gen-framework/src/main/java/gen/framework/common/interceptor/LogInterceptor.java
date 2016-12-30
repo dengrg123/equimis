@@ -38,6 +38,9 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
 	@Value("${gen.framework.login.url}")
 	private String loginUrl;
 	
+	@Value("${gen.framework.logout.url}")
+	private String logoutUrl;
+	
 	@Value("${gen.framework.web.urls}")
 	private String webUrls;
 	
@@ -110,6 +113,9 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
 				response.sendRedirect(referer);
 				return false;
 			}
+		}
+		if(path.equals(logoutUrl)){
+			request.setAttribute("jumpurl", referer);
 		}
 		return true;
 	}

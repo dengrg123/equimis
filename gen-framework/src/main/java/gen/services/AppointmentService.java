@@ -1,6 +1,5 @@
 package gen.services;
 
-import java.text.ParseException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -107,8 +106,8 @@ public class AppointmentService {
 	public String assess(String assess,String aid){
 		AppointmentBean appointmentBean=new AppointmentBean();
 		appointmentBean.setId(aid);
-		appointmentBean.setAssess(assess);
-		return this.update(appointmentBean);
+		appointmentBean.setAssess(StringUtils.isBlank(assess)?"无":assess);
+		return this.update(appointmentBean,"评价成功");
 	}
 	@Transactional(propagation = Propagation.REQUIRED)
 	public String shenpi(String id,String auditmessage,Integer status){
@@ -124,10 +123,10 @@ public class AppointmentService {
 		appointmentBean.setAuditmessage(auditmessage);
 		appointmentBean.setStatus(status);
 		appointmentBean.setAudittime(new Date());
-		return this.update(appointmentBean);
+		return this.update(appointmentBean,"审批成功");
 	}
 	@Transactional(propagation = Propagation.REQUIRED)
-	public String update(AppointmentBean appointmentBean){
+	public String update(AppointmentBean appointmentBean,String retMsg){
 		JSONObject result=new  JSONObject();
 		if(appointmentBean==null){
 			result.put("retCode", "-7");
@@ -154,6 +153,7 @@ public class AppointmentService {
 		CommonUpdateBean cub=new CommonUpdateBean("em_appointment", appointmentBean, condition);
 		this.commonMapper.updateObject(cub);
 		result.put("retCode", "1");
+		result.put("retMsg", retMsg);
 		
 		return result.toJSONString();
 		

@@ -53,8 +53,9 @@ word-break:break-all;
     border:1px solid white;   /* 单元格边框 */  
     padding-top:4px; padding-bottom:4px;  
 	width:23.3%;
-	 	font-size: 12px;
-	 text-align: center
+	 	font-size: 10px;
+	 text-align: center;
+
 } 
   .datalist .righttd{
   background:#D9D9D9;
@@ -122,14 +123,14 @@ border: 1px dashed ;
 													<span th:case="2">不通过</span>
 													
 												</td>
-                                        			<td class="righttd"></td>
-                                        			<td ></td>
+           											<td class="righttd"><div>审批意见</div></td>
+                                        			<td th:text="${model['AUDITMESSAGE']}"></td>
                                         		</tr>
-                                               		<tr>
+                                               		<tr th:if="${model['STATUS']==1}">
                                                		<td class="righttd"><div>评价</div></td>
-                                        			<td th:text="${model['ASSESS']}" colspan="4">2</td>
+                                        			<td th:text="${model['ASSESS']}" th:attr="colspan=${model['ASSESS']==null?'4':'5'}">2</td>
 
-                                        			<td> <button class="layui-btn pingjie" style="padding: 0px;width: 80%" id=""  th:attr="id=${model['ID']}" >去评价</button></td>
+                                        			<td th:if="${model['ASSESS']==null}"> <button class="layui-btn pingjie" style="padding: 0px;width: 80%" id=""  th:attr="id=${model['ID']}" >去评价</button></td>
                                         		</tr>
                                         	</table>
                                         </div>
