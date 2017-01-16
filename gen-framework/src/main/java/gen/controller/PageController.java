@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.alibaba.fastjson.JSONObject;
 
+import gen.framework.common.TestDirective;
 import gen.services.DirectoryDataService;
 
 @Controller
@@ -40,6 +41,12 @@ public class PageController {
 
 		return "pages/equipmentList";
 	}
+	@RequestMapping("toTest")
+	public String toTest(ModelMap model){
+		model.addAttribute("abc", new TestDirective());
+		return "pages/test";
+	}
+	
 	@RequestMapping("toLogin")
 	public String toLogin(ModelMap model,HttpServletRequest request){
 		/*String referer=request.getHeader("referer");
