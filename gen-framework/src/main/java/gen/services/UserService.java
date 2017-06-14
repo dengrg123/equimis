@@ -1,5 +1,6 @@
 package gen.services;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.UUID;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +29,9 @@ import gen.framework.common.util.Page;
 public class UserService {
 	@Autowired
 	private CommonMapper commonMapper;
+	
+	@Value("${gen.framework.manager.urls}")
+	private String managerurls;
 	
 	@Transactional(propagation = Propagation.REQUIRED)
 	public String add(UserBean user){
@@ -109,6 +114,10 @@ public class UserService {
 			callbackMap.put("userInfo", userIdList.get(0));
 			result.put("retCode", "1");
 			result.put("retMsg", "登录成功");
+			if(account.equals("sysadmin") && !jumpurl.startsWith("/manager/")){
+				//List<String> managerUrlList=Arrays.asList(managerurls.replaceAll(" ", "").split(","));
+				jumpurl=managerurls.replaceAll(" ", "").split(",")[0];
+			}
 			result.put("jumpurl", jumpurl);
 		}else{
 			result.put("retCode", "-15");
@@ -135,4 +144,5 @@ public class UserService {
 
 		return page;
 	}
+	
 }

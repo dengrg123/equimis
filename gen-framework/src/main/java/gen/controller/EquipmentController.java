@@ -17,12 +17,10 @@ public class EquipmentController {
 	@Autowired
 	private EquipmentService equipmentService;
 	
-	public EquipmentController() {
-		// TODO Auto-generated constructor stub
-		System.out.println("---------");
-	}
+
 	@RequestMapping(value="/ajaxList")
 	@ResponseBody
+	
 	public String list(String typeName,
 			String subjectName,
 			String deptid,
