@@ -216,6 +216,7 @@ public class AppointmentService {
 			 condition=new HashMap<String,Object>();
 			condition.put("userid,=", userid);
 		}
+		condition.put("status,=", 1);
 		CommonSearchBean csb=new CommonSearchBean("em_appointment_wx","applytime  DESC",null, page.getStartRow(),page.getEndRow(),null,new CommonChildBean("em_manageequip", "equipmentid", "equipmentid", condition));
 		CommonCountBean ccb = new CommonCountBean();
 
