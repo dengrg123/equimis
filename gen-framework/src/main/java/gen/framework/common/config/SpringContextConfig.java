@@ -21,6 +21,8 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import com.alibaba.druid.pool.DruidDataSourceFactory;
 
+import gen.framework.common.interceptor.MybatisInterceptor;
+
 @Configuration
 public class SpringContextConfig {
 
@@ -99,7 +101,9 @@ public class SpringContextConfig {
         //fb.setTypeAliasesPackage(env.getProperty("mybatis.typeAliasesPackage"));// 指定基包
         fb.setMapperLocations( new PathMatchingResourcePatternResolver().getResources(env.getProperty("mybatis.mapperLocations")));//
 
-       
+        Interceptor[] its = new Interceptor[1];
+        its[0] = new MybatisInterceptor();
+        fb.setPlugins(its);
       // fb.setConfigLocation(new DefaultResourceLoader() .getResource(env .getProperty("mybatis.configLocation")));
 
         return fb.getObject();

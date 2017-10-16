@@ -37,7 +37,7 @@
     .style_a{
     	margin-right:20px;
     }
-   .style_a2{font-size: 15px;}
+
   
 </style>
 </head>
@@ -136,22 +136,7 @@
 			  content: '/pages/toEquipmentCircs?equipmentid='+eid //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
 		});
 	}
-	function toSubmit(){
-		
-		$.post("/appointment/ajaxSubmit",$("#formdiv form").serializeArray(),function(data){
-			if(data.retCode==1){
-				alert(data.retMsg);
-				$("#formdiv").slideUp("fast",function(){
-					swiperNested4.reInit();
-					swiperNested4.swipeTo(0);
-				});
-			}else if(data.retCode==10000){
-				location.href=data.jumpurl;
-			}else{
-				alert(data.retMsg);
-			}
-		},"JSON")
-	}
+
 	
 	function moreDept(obj){
 		if($(".md").length==0){
@@ -293,12 +278,20 @@
 			
 			return ;
 		}
-		layer.open({
-			  type: 2, 
-			  area: ['90%','468px'],
-			 
-			  content: '/pages/toEditAppol?eid='+eid //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
-		});
+		$.post("/appointment/ajaxCheckAppRole",{eid:eid},function(data){
+			if(data.retCode!=1){
+				layer.alert(data.retMsg);
+			}else{
+				var ob=layer.open({
+					  type: 2, 
+					  area: ['90%','468px'],
+					 
+					  content: '/pages/toEditAppol?eid='+eid //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+				});
+			}
+		},"JSON");
+
+	
 	}
 	function getDataById(obj){
 		$(obj).text("收起...");

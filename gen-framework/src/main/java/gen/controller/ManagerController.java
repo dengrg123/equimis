@@ -1,5 +1,7 @@
 package gen.controller;
 
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import gen.beans.UserBean;
 import gen.services.AppointmentService;
@@ -24,12 +27,17 @@ public class ManagerController {
 	
 	@RequestMapping("toAppointmentList")
 	public String toCommon(
-			String userid,
+			@SessionAttribute("loginInfo")Map<String,String> loginInfo,
 			@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
 			@RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
 			ModelMap model){
 		try {
-			model.addAttribute("appoPage", appointmentService.list(userid, pageNum, pageSize));
+			if(loginInfo.get("account").equals("sysadmin")){
+				model.addAttribute("appoPage", appointmentService.list(null, pageNum, pageSize));
+			}else{
+				model.addAttribute("appoPage", appointmentService.managerList(loginInfo.get("userid"), pageNum, pageSize));
+			}
+			
 		} catch (Exception e) {
 			logger.error("ManagerController.toCommon",e);
 			// TODO: handle exception

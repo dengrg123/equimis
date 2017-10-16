@@ -70,7 +70,7 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
 					this.setLoginToJumpUrl(path, request, response);
 					
 					return false;
-				}else if(loginInfo.containsKey("account") && loginInfo.get("account").equals("sysadmin")){
+				}else if(loginInfo.containsKey("account")){
 					return true;
 				}else{
 					this.setLoginToJumpUrl(path, request, response);

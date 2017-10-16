@@ -3,8 +3,6 @@ package gen.controller;
 import java.util.Date;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import gen.beans.AppointmentBean;
 import gen.services.AppointmentService;
@@ -28,12 +27,24 @@ public class AppointmentController {
 	
 	@RequestMapping(value="/ajaxSubmit",method=RequestMethod.POST)
 	@ResponseBody
-	public String ajaxSubmit(AppointmentBean appointmentBean,HttpSession session){
+	public String ajaxSubmit(AppointmentBean appointmentBean,@SessionAttribute("loginInfo")Map<String,String> loginInfo){
 		try {
-			Map<String,String> loginInfo=(Map<String,String>)session.getAttribute("loginInfo");
 			appointmentBean.setProjectmanager(loginInfo.get("name"));
-			appointmentBean.setUserid(loginInfo.get("id"));
+			appointmentBean.setUserid(loginInfo.get("userid"));
 			return this.appointmentService.submit(appointmentBean);
+		} catch (Exception e) {
+			// TODO: handle exception
+			logger.error("AppointmentController.ajaxSubmit", e);
+			e.printStackTrace();
+			return "{\"retCode\":-1,\"retMsg\":\"系统出现异常\"}";
+		}
+	}
+	@RequestMapping(value="/ajaxCheckAppRole",method=RequestMethod.POST)
+	@ResponseBody
+	public String ajaxCheckAppRole(@SessionAttribute("loginInfo")Map<String,String> loginInfo,String eid){
+		try {
+				
+			return this.appointmentService.checkRole(eid,loginInfo.get("userid")).toJSONString();
 		} catch (Exception e) {
 			// TODO: handle exception
 			logger.error("AppointmentController.ajaxSubmit", e);
@@ -58,11 +69,10 @@ public class AppointmentController {
 			@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
 			@RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
 			ModelMap model,
-			HttpSession session){
+			@SessionAttribute("loginInfo")Map<String,String> loginInfo){
 		
 		try {
-			Map<String,String> loginInfo=(Map<String,String>)session.getAttribute("loginInfo");
-			model.addAttribute("appoPage", this.appointmentService.list(loginInfo.get("id"), pageNum, pageSize));
+			model.addAttribute("appoPage", this.appointmentService.list(loginInfo.get("userid"), pageNum, pageSize));
 		} catch (Exception e) {
 			logger.error("AppointmentController.toAppointmentList", e);
 			e.printStackTrace();
@@ -75,10 +85,9 @@ public class AppointmentController {
 	public String ajaxAssess(
 			String assess,
 			String aid,
-			HttpSession session){
+			@SessionAttribute("loginInfo")Map<String,String> loginInfo){
 		
 		try {
-			Map<String,String> loginInfo=(Map<String,String>)session.getAttribute("loginInfo");
 			return this.appointmentService.assess(assess, aid);
 		} catch (Exception e) {
 			logger.error("AppointmentController.toAppointmentList", e);

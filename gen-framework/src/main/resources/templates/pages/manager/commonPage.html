@@ -88,7 +88,7 @@ border: 1px dashed ;
                                         <h2 class="page_title"></h2>
                                         <ul id="tabsmenu" class="tabsmenu">
                                             <li class="active" th:attr="class=${appoPage!=null?'active':''}"><a href="/manager/toAppointmentList">审批管理</a></li>
-                                            <li th:attr="class=${userPage!=null?'active':''}"><a href="/manager/toUserList">用户管理</a></li>
+                                            <li th:if="${session.loginInfo!=null and session.loginInfo['account']=='sysadmin'}" th:attr="class=${userPage!=null?'active':''}"><a href="/manager/toUserList">用户管理</a></li>
 
                                         </ul>
                                         
@@ -129,7 +129,7 @@ border: 1px dashed ;
                                                		<td class="righttd"><div>评价</div></td>
                                         			<td th:text="${model['ASSESS']}" colspan="4">2</td>
                                         			<td  align="right" th:switch="${model['STATUS']}">
-                                        			<span th:case="0"><button class="layui-btn shenpi" th:attr="id=${model['ID']}"  style="padding: 0px;width: 80%" id="pingjie">审　批</button></span>
+                                        			<span th:case="0"><button class="layui-btn shenpi" th:if="${session.loginInfo!=null and session.loginInfo['account']!='sysadmin'}" th:attr="id=${model['ID']}"  style="padding: 0px;width: 80%" id="pingjie">审　批</button></span>
 	
                                         			 	
                                         			</td>
@@ -139,7 +139,7 @@ border: 1px dashed ;
                                         </div>
                                         	<div id="pages"></div>
                                         </div>
-                                        <div id="tab2" class="portfolio_item tabcontent"  th:if="${userPage!=null}" >
+                                        <div id="tab2" class="portfolio_item tabcontent"  th:if="${session.loginInfo!=null and session.loginInfo['account']=='sysadmin' and userPage!=null}" >
                                         <button class="layui-btn" style="margin-bottom: 7px;" id="btnadd">添加用户</button>
                                         <div class="portfolio_item portfolio_item2" th:each="model:${userPage.result}" >
                                         	<table class="datalist" >

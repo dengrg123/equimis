@@ -1,4 +1,4 @@
-package gen.test;
+/*package gen.test;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,7 +19,6 @@ public class CommonMapperTest {
 	@Autowired
 	private MongoOperations  mongoOperations ;
 
-
 	
 	@Test
 	public void testBeanGetObject(){
@@ -29,3 +28,4 @@ public class CommonMapperTest {
 	
 
 }
+*/
