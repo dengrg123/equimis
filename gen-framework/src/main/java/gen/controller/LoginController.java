@@ -30,6 +30,7 @@ public class LoginController {
 				if(callback.indexOf("登录成功")>-1){
 					
 					session.setAttribute("loginInfo", callbackMap.get("userInfo"));
+					session.setAttribute("isManager", callbackMap.get("isManager"));
 				}
 				return callback;
 			} catch (Exception e) {

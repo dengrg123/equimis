@@ -70,7 +70,7 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
 					this.setLoginToJumpUrl(path, request, response);
 					
 					return false;
-				}else if(loginInfo.containsKey("account")){
+				}else if("sysadmin".equals(loginInfo.get("account")) || isManager(request)){
 					return true;
 				}else{
 					this.setLoginToJumpUrl(path, request, response);
@@ -124,6 +124,16 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
 		
 		Map<String,String> loginInfo=(Map<String,String>)session.getAttribute("loginInfo");
 		return loginInfo;
+		
+	}
+	private boolean isManager(HttpServletRequest request){
+		HttpSession session=request.getSession();
+		
+		Boolean isManager=(Boolean)session.getAttribute("isManager");
+		if(isManager==null){
+			isManager=false;
+		}
+		return isManager;
 		
 	}
 	private void setLoginToJumpUrl(String path,HttpServletRequest request,HttpServletResponse response) throws Exception{

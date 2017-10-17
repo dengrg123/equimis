@@ -50,8 +50,8 @@
       <a href="/pages/toEquipmentList"><img src="/gomobile/2/images/icons/home.png" alt="" title="" /></a>
       </div>
    		<div  class="gomenu2" style="line-height: 45px;float: left" th:if="${session.loginInfo!=null?true:false}">
-   			<a href="/appointment/toAppoList" th:if="${session.loginInfo['account']!='sysadmin'}">我的预约</a>
-   			<a href="/manager/toAppointmentList" th:if="${session.loginInfo['account']=='sysadmin'}">我的审批</a>
+   			<a href="/appointment/toAppoList" th:if="${session.loginInfo['account']!='sysadmin' and (session.isManager==null or !session.isManager)}">我的预约</a>
+   			<a href="/manager/toAppointmentList" th:if="${session.loginInfo['account']=='sysadmin' or (session.isManager!=null and session.isManager)}">我的审批</a>
    		</div>
       <div class="gomenu2" style="line-height: 45px;;float: right;">
       <span th:if="${session.loginInfo!=null?true:false}" th:text="'欢迎【'+${session.loginInfo['name']!=null?session.loginInfo['name']:session.loginInfo['account']}+'】'"></span>

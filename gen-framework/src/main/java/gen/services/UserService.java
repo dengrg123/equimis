@@ -111,10 +111,17 @@ public class UserService {
 		CommonSearchBean csb=new CommonSearchBean("em_user", null, "userid,account,name", null,null,condition);
 		List userIdList=this.commonMapper.selectObjects(csb);
 		if(userIdList!=null && !userIdList.isEmpty()){
-			callbackMap.put("userInfo", userIdList.get(0));
+			Map usermap=(Map)userIdList.get(0);
+			callbackMap.put("userInfo",usermap );
 			result.put("retCode", "1");
 			result.put("retMsg", "登录成功");
-			if(account.equals("sysadmin") && !jumpurl.startsWith("/manager/")){
+			condition.clear();
+			condition.put("userid,=", usermap.get("userid"));
+			long n=this.commonMapper.selectCount(new CommonCountBean("em_manageequip", condition));
+			
+			callbackMap.put("isManager", n>0);
+			
+			if((n>0 || account.equals("sysadmin")) && !jumpurl.startsWith("/manager/")){
 				//List<String> managerUrlList=Arrays.asList(managerurls.replaceAll(" ", "").split(","));
 				jumpurl=managerurls.replaceAll(" ", "").split(",")[0];
 			}
