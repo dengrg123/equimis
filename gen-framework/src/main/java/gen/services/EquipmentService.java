@@ -37,13 +37,14 @@ public class EquipmentService {
 	
 	public String equipmentList(String typeName,String subjectName,String deptid,Integer pageNum,Integer pageSize) throws Exception{
 		Page page=new Page(pageNum, pageSize);
-		Map<String,Object> condition=null;
+		Map<String,Object> condition=new HashMap<String,Object>(); 
 
 		if(StringUtils.isNotBlank(deptid)){
-			condition=new HashMap<String,Object>(); 
+			
 			condition.put("DEPARTMENTID", deptid);
 		}
-
+		condition.put("status,=", 1);
+		
 		Map<String,Object> condition_assettype=null;
 		if(StringUtils.isNotBlank(typeName)){
 			condition_assettype=new HashMap<String,Object>();

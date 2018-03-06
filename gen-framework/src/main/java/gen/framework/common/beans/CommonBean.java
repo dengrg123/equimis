@@ -36,8 +36,11 @@ public abstract class CommonBean {
 	 */
 	private List childConditions;
 	
+	/**
+	 * 
+	 * true表示 条件默认以and并接，false表示手动加括号或者or,and
+	 */
 	public Boolean isAuto=true;
-	
 	
 
 	public Boolean isAuto() {

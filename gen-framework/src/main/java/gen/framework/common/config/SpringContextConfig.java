@@ -21,6 +21,8 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import com.alibaba.druid.pool.DruidDataSourceFactory;
 
+import gen.framework.common.interceptor.MybatisInterceptor;
+
 @Configuration
 public class SpringContextConfig {
 
@@ -39,6 +41,17 @@ public class SpringContextConfig {
         props.put("url", env.getProperty("mybatis.jdbc.url"));
         props.put("username", env.getProperty("mybatis.jdbc.username"));
         props.put("password", env.getProperty("mybatis.jdbc.password"));
+       props.put("initialSize", env.getProperty("mybatis.jdbc.initialSize"));
+         props.put("maxActive", env.getProperty("mybatis.jdbc.maxActive"));
+        props.put("maxWait", env.getProperty("mybatis.jdbc.maxWait"));
+         props.put("timeBetweenEvictionRunsMillis", env.getProperty("mybatis.jdbc.timeBetweenEvictionRunsMillis"));
+         props.put("minEvictableIdleTimeMillis", env.getProperty("mybatis.jdbc.minEvictableIdleTimeMillis"));
+        props.put("validationQuery", env.getProperty("mybatis.jdbc.validationQuery"));
+        props.put("testWhileIdle", env.getProperty("mybatis.jdbc.testWhileIdle"));
+        props.put("testOnBorrow", env.getProperty("mybatis.jdbc.testOnBorrow"));
+        props.put("testOnReturn", env.getProperty("mybatis.jdbc.testOnReturn"));
+        props.put("poolPreparedStatements", env.getProperty("mybatis.jdbc.poolPreparedStatements"));
+        props.put("maxPoolPreparedStatementPerConnectionSize", env.getProperty("mybatis.jdbc.maxPoolPreparedStatementPerConnectionSize"));
         return DruidDataSourceFactory.createDataSource(props);
     }
 
@@ -88,7 +101,9 @@ public class SpringContextConfig {
         //fb.setTypeAliasesPackage(env.getProperty("mybatis.typeAliasesPackage"));// 指定基包
         fb.setMapperLocations( new PathMatchingResourcePatternResolver().getResources(env.getProperty("mybatis.mapperLocations")));//
 
-       
+        Interceptor[] its = new Interceptor[1];
+        its[0] = new MybatisInterceptor();
+        fb.setPlugins(its);
       // fb.setConfigLocation(new DefaultResourceLoader() .getResource(env .getProperty("mybatis.configLocation")));
 
         return fb.getObject();

@@ -48,12 +48,14 @@
 } 
   .datalist td{  
   vertical-align:middle;
-  word-wrap:break-word;
+    word-wrap:break-word;
 word-break:break-all;
     border:1px solid white;   /* 单元格边框 */  
     padding-top:4px; padding-bottom:4px;  
 	width:23.3%;
 	 	font-size: 10px;
+	 text-align: center;
+
 } 
   .datalist .righttd{
   background:#D9D9D9;
@@ -65,7 +67,6 @@ word-break:break-all;
   .datalist .righttd div{
 margin:0 auto;width:20px;line-height:15px;
 }
-
 .portfolio_item2{
 padding:2px;width: 99%;
 border: 1px dashed ;
@@ -85,14 +86,14 @@ border: 1px dashed ;
                     <div class="swiper-slide">
                               <div class="slide-inner">
                                         <div class="pages_container">
-                                        <h2 class="page_title"></h2>
+                                
                                         <ul id="tabsmenu" class="tabsmenu">
-                                            <li class="active" th:attr="class=${appoPage!=null?'active':''}"><a href="/manager/toAppointmentList">审批管理</a></li>
-                                            <li th:if="${session.loginInfo!=null and session.loginInfo['account']=='sysadmin'}" th:attr="class=${userPage!=null?'active':''}"><a href="/manager/toUserList">用户管理</a></li>
+                                            <li class="active" th:attr="class=${appoPage!=null?'active':''}"><a href="/manager/toAppointmentList">预约列表</a></li>
 
                                         </ul>
                                         
                                         <div id="tab1" class="portfolio_item tabcontent" th:if="${appoPage!=null}" >
+                                       
                                         	<div class="portfolio_item portfolio_item2" th:each="model:${appoPage.result}" >
                                         	<table class="datalist" >
                      
@@ -113,7 +114,7 @@ border: 1px dashed ;
                                         			<td  th:text="${model['SAMPLENAME']}">2</td>
                                         		</tr>
                                         		<tr>
-                                        			<td class="righttd"><div>操作人</div></td>
+                                        			<td class="righttd"><div> 操作人</div></td>
                                         			<td  th:text="${model['HANDLER']}">2</td>
                                         			<td class="righttd"><div>审批状态</div></td>
                                         			<td th:switch="${model['STATUS']}">
@@ -122,47 +123,20 @@ border: 1px dashed ;
 													<span th:case="2">不通过</span>
 													
 												</td>
-                                        			<td class="righttd"><div>审批意见</div></td>
+           											<td class="righttd"><div>审批意见</div></td>
                                         			<td th:text="${model['AUDITMESSAGE']}"></td>
                                         		</tr>
-                                               		<tr>
+                                               		<tr th:if="${model['STATUS']==1}">
                                                		<td class="righttd"><div>评价</div></td>
-                                        			<td th:text="${model['ASSESS']}" colspan="4">2</td>
-                                        			<td  align="right" th:switch="${model['STATUS']}">
-                                        			<span th:case="0"><button class="layui-btn shenpi" th:if="${session.loginInfo!=null and session.loginInfo['account']!='sysadmin'}" th:attr="id=${model['ID']}"  style="padding: 0px;width: 80%" id="pingjie">审　批</button></span>
-	
-                                        			 	
-                                        			</td>
-                                        			
+                                        			<td th:text="${model['ASSESS']}" th:attr="colspan=${model['ASSESS']==null?'4':'5'}">2</td>
+
+                                        			<td th:if="${model['ASSESS']==null}"> <button class="layui-btn pingjie" style="padding: 0px;width: 80%" id=""  th:attr="id=${model['ID']}" >去评价</button></td>
                                         		</tr>
                                         	</table>
                                         </div>
                                         	<div id="pages"></div>
                                         </div>
-                                        <div id="tab2" class="portfolio_item tabcontent"  th:if="${session.loginInfo!=null and session.loginInfo['account']=='sysadmin' and userPage!=null}" >
-                                        <button class="layui-btn" style="margin-bottom: 7px;" id="btnadd">添加用户</button>
-                                        <div class="portfolio_item portfolio_item2" th:each="model:${userPage.result}" >
-                                        	<table class="datalist" >
-                                        		<tr>
-                                        		     <td class="righttd"><div>用户帐号</div></td>
-                                        			<td th:text="${model['ACCOUNT']}">2</td>
-                                        			<td class="righttd"><div>工号/学号</div></td>
-                                        			<td th:text="${model['USERNUMBER']}">2</td>
-                                        			<td class="righttd"><div>真实姓名</div></td>
-                                        			<td th:text="${model['NAME']}">2</td>
-                                        		</tr>
-                                        		<tr>
-                                        		     <td class="righttd"><div>手机号码</div></td>
-                                        			<td th:text="${model['MOBILE']}">2</td>
-                                        			<td class="righttd"><div>所在单位</div></td>
-                                        			<td th:text="${model['DEPARTMENT']}">2</td>
-                                        			<td class="righttd"><div>注册时间</div></td>
-                                        			<td th:text="${model['REGISTERTIME']!=null?model['REGISTERTIME'].toString().substring(0,16):''}">2</td>
-                                        		</tr>
-                                        	</table>
-                                        </div>
-                                       <div id="pages"></div>
-                                        </div>
+                                        
 
                                         <div class="clearfix"></div>
       									<div class="scrolltop"><a href="#" class="scrolltop4"><img src="/gomobile/2/images/icons/top.png" alt="Go on top" title="Go on top" /></a></div>
@@ -213,22 +187,13 @@ border: 1px dashed ;
 			        }
 			      }
 			  });
-		$(".shenpi").click(function(){
+		$(".pingjie").click(function(){
 			var idvalue=this.id;
 			layer.open({
 				  type: 2, 
-				  area: ['70%','320px'],
+				  area: ['70%','250px'],
 				 
-				  content: '/pages/toShenPi?id='+idvalue //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
-			});
-		})
-		$("#btnadd").click(function(){
-			var idvalue=this.id;
-			layer.open({
-				  type: 2, 
-				  area: ['70%','200px'],
-				 
-				  content: '/pages/toEditUser' //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+				  content: '/pages/toAssess?aid='+idvalue //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
 			});
 		})
 	})

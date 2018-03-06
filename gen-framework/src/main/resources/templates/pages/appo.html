@@ -5,14 +5,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
 <link rel="apple-touch-icon" href="/gomobile/2/images/apple-touch-icon.png" />
 <link rel="apple-touch-startup-image" href="/gomobile/2/images/apple-touch-startup-image-320x460.png" />
-<meta name="author" content="FamousThemes" />
-<meta name="description" content="GoMobile - A next generation web app theme" />
-<meta name="keywords" content="mobile web app, mobile template, mobile design, mobile app design, mobile app theme, mobile wordpress theme, my mobile app" />
-<title>仿GoMobile触屏版html5响应式手机app网站模板下载经典-pppf.taobao.com整理搜集仅用于学习</title>
+
+<title>华南农业大学</title>
 <link type="text/css" rel="stylesheet" href="/layui/css/layui.css"/>
 <link type="text/css" rel="stylesheet" href="/gomobile/2/css/style.css"/>
 <link type="text/css" rel="stylesheet" href="/gomobile/2/colors/medical/medical.css"/>
@@ -48,7 +45,6 @@
 
 
                                         <div class="portfolio_item" id="formdiv" >
-                                        <div style="position:relative;height: 20px;width:100%;text-align: right;margin-top: -10"><a href="javascript:void(0)" onclick="$('#formdiv').hide()">关闭</a></div>
                                         	<form>
                                         	<input type="hidden" id="equipmentid" name="equipmentid" th:value="${#httpServletRequest.getParameter('eid')}" />
 											<p class="titlep" >项目名称：</p>
@@ -78,9 +74,9 @@
 													<option th:each="model:${useTypeCode}" th:value="${model['code']}" th:text="${model['name']}"></option>
 												</select>
 											</p>  
-											<p class="titlep" >样口名称：</p>
+											<p class="titlep" >样品名称：</p>
 											<p class="textp" ><input name="samplename" style="width:80%;height:30px;border:1px solid #f4f4f4;"/></p>
-											<p class="titlep" >样口数量：</p>
+											<p class="titlep" >样品数量：</p>
 											<p class="textp" ><input name="samples" style="width:80%;height:30px;border:1px solid #f4f4f4;"/></p>
 											<p class="titlep" >　操作人：</p>
 											<p class="textp" ><input type="text" name="handler" style="width:80%;height:30px;border:1px solid #f4f4f4;"/></p>
@@ -97,29 +93,32 @@
  <script src="/gomobile/2/js/mobiscroll/dev/js/mobiscroll.core-2.6.2.js" type="text/javascript"></script>
 <script src="/gomobile/2/js/mobiscroll/dev/js/mobiscroll.core-2.6.2-zh.js" type="text/javascript"></script>
 <script src="/gomobile/2/js/mobiscroll/dev/js/mobiscroll.datetime-2.6.2.js" type="text/javascript"></script>
-
+<script type="text/javascript" src="/layui/layui.js"></script>
 
 <script type="text/javascript"  th:inline="javascript">
 	var isLogin= /*[[${session.loginInfo!=null?true:false}]]*/;
 	/* <![CDATA[*/
+	 var layer=null;
 
 	function toSubmit(){
 		
 		$.post("/appointment/ajaxSubmit",$("#formdiv form").serializeArray(),function(data){
 			if(data.retCode==1){
-				alert(data.retMsg);
+				layer.alert(data.retMsg);
 				top.location.href=top.location.href;
 			}else if(data.retCode==10000){
 				top.location.href=data.jumpurl;
 			}else{
-				alert(data.retMsg);
+				layer.alert(data.retMsg);
 			}
 		},"JSON")
 	}
 	
 	$(function(){
 
-		
+		layui.use(['layer'],function(){
+			layer=layui.layer;
+		})
 
 		var currentDate=new Date();
 		var curr = currentDate.getFullYear();

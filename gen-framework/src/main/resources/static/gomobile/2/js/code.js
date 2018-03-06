@@ -77,6 +77,7 @@ $(".trigger_blog").click(function(){
 	return false;
 });
 $(".post_more").click(function(){
+
 	$(this).toggleClass("activep").next().slideToggle("slow");
 	return false;
 });

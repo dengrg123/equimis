@@ -38,6 +38,9 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
 	@Value("${gen.framework.login.url}")
 	private String loginUrl;
 	
+	@Value("${gen.framework.logout.url}")
+	private String logoutUrl;
+	
 	@Value("${gen.framework.web.urls}")
 	private String webUrls;
 	
@@ -67,7 +70,7 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
 					this.setLoginToJumpUrl(path, request, response);
 					
 					return false;
-				}else if(loginInfo.containsKey("account") && loginInfo.get("account").equals("sysadmin")){
+				}else if("sysadmin".equals(loginInfo.get("account")) || isManager(request)){
 					return true;
 				}else{
 					this.setLoginToJumpUrl(path, request, response);
@@ -90,7 +93,9 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
 				}
 			}
 		}
-		if(StringUtils.isBlank(referer) && path.equals(loginUrl)){
+		if(request.getAttribute("jumpurl")!=null && StringUtils.isBlank(referer) && path.equals(loginUrl)){
+			return true;
+		}else if(StringUtils.isBlank(referer) && path.equals(loginUrl)){
 			Map<String,String> loginInfo=getLoginInfo(request);
 			if(loginInfo==null){
 				request.setAttribute("jumpurl", webUrlsList.get(0));
@@ -109,6 +114,9 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
 				return false;
 			}
 		}
+		if(path.equals(logoutUrl)){
+			request.setAttribute("jumpurl", referer);
+		}
 		return true;
 	}
 	private Map<String,String> getLoginInfo(HttpServletRequest request){
@@ -116,6 +124,16 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
 		
 		Map<String,String> loginInfo=(Map<String,String>)session.getAttribute("loginInfo");
 		return loginInfo;
+		
+	}
+	private boolean isManager(HttpServletRequest request){
+		HttpSession session=request.getSession();
+		
+		Boolean isManager=(Boolean)session.getAttribute("isManager");
+		if(isManager==null){
+			isManager=false;
+		}
+		return isManager;
 		
 	}
 	private void setLoginToJumpUrl(String path,HttpServletRequest request,HttpServletResponse response) throws Exception{

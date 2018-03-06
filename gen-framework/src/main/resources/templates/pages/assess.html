@@ -10,19 +10,15 @@
 </head>
 <body >
 <form class="layui-form" >
-<input type="hidden" name="id" th:value="${#httpServletRequest.getParameter('id')}"/>
+<input type="hidden" name="aid" th:value="${#httpServletRequest.getParameter('aid')}"/>
   <div class="layui-form-item">
-    <label class="layui-form-label" style="width: auto;padding:0 0 0 10px">审批状态</label>
-    <div style="padding-top:20px;">
-      <input type="radio" name="status" value="1" title="通过"  />
-      <input type="radio" name="status" value="2" title="不通过" checked="checked"  />
+
+  <div class="layui-form-item layui-form-text">
+    <label class="layui-form-label" style="width: auto;padding:7px 0 7px 10px;font-size: 15px">评价</label>
+    <div >
+      <textarea name="assess"   placeholder="请输入内容" class="layui-textarea" style="width:95%;margin-left:8px;"></textarea>
     </div>
   </div>
-  <div class="layui-form-item layui-form-text">
-    <label class="layui-form-label" style="width: auto;padding:0 0 7px 10px;font-size: 15px">审批意见</label>
-    <div >
-      <textarea name="auditmessage"   placeholder="请输入内容" class="layui-textarea" style="width:95%;margin-left:8px;"></textarea>
-    </div>
   </div>
   <div class="layui-form-item">
     <div align="center">
@@ -36,7 +32,7 @@
 layui.use('form', function(){
   var form = layui.form();
 	$(".layui-form").submit(function(){
-		$.post("/manager/ajaxShenpi",$(".layui-form").serializeArray(),function(data){
+		$.post("/appointment/ajaxAssess",$(".layui-form").serializeArray(),function(data){
 			alert(data.retMsg);
 			if(data.retCode==1){
 				top.location.href=window.parent.location.href;
